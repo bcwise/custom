@@ -45,10 +45,8 @@ M.plugins = {
 }
 
 -- chadrc
--- local my_highlights = require("custom.highlights")
 
 M.ui = {
-   -- hl_override = my_highlights,
    theme = "onedark",
 }
 

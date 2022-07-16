@@ -7,15 +7,9 @@ M.setup_lsp = function(attach, capabilities)
    local servers = {
         "bashls",
         "clangd",
-        "clojure_lsp",
         "cmake",
-        "elixirls",
-        "ember",
-        "gopls",
         "rust_analyzer",
-        "solargraph",
         "texlab",
-        "tsserver",
         "vimls",
     }
 

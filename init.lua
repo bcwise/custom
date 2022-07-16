@@ -2,8 +2,20 @@
 
 vim.g.mapleader = ','
 local o = vim.o
+local g = vim.g
 local opts = { noremap = true, silent = true}
 
+g.mapleader = ','
+
+--===================================================================
+--= Basic settings that need to be done early.
+--= ===================================================================
+o.compatible = false     -- Eliminate vi backwards-compatability
+o.number = true              -- Enable line numbers
+o.numberwidth = 4
+-- g.filetype plugin on          -- required!
+-- g.filetype indent on          -- required!
+o.syntax = true
 --"
 --" Abbreviations (typo corrections)
 --"
