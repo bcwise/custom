@@ -15,7 +15,7 @@ return {
   ["guns/vim-sexp"] = {},
   ["tpope/vim-sexp-mappings-for-regular-people"] = {},
   ["tpope/vim-commentary"] = {},
-  ["tpope/vim-surround"] = {},
+  -- ["tpope/vim-surround"] = {},
   ["gmartsenkov/vim-test"] = {
     config = function()
       vim.g["test#custom_alternate_file"] = function()

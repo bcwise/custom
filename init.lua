@@ -135,9 +135,67 @@ vim.cmd('cnoreabbrev X  x')
 
 
 vim.cmd[[
+"--------------------------------------------------------------------
+" Settings: SEARCH
+"--------------------------------------------------------------------
+set hlsearch        " Highlight search
+set ignorecase      " Ignore case when searching.
+set incsearch       " Incremental search
+set nowrapscan      " does not wrap back to the beginning for search.
+set smartcase       " Searches ignoring case unless an uppercase is pressed.
 
-noremap ;       :%s/\<<c-r><c-w>\>//g<left><left>
+
+" Shortcuts: search/replace
+" A function is for replacing the current-under-cursor word with
+" another pattern/word. Simply, it copies the word under cursor and inserts it
+" into a substitution command call. You only need to type the replacement pattern
+" and press the Enter key to actually replace the text:
+" replace the word under cursor
+" Select 's' to search/replace
+" nmap ; :%s/\<<c-r><c-w>\>/
+" noremap ;       :%s/\<<c-r><c-w>\>//g<left><left>
+"nmap ; :%s/\<<c-r><c-w>\>//g<left><left>
+" noremap ;       :%s/<<c-r><c-w>>//g<left><left>
+noremap <silent>; :/%s\/<c-r><c-w\/\/g<left><left>
+
+" Shortcuts: Substitute
+" Setup command to replace current word with last yanked, cut, etc. word.
+" Select "S" to replace
+nnoremap <silent>S :let @x=@"<CR>"_diw"xP
+
+" This mapping allows us to press <enter> to search for the current
+" token under the cursor without stepping to the next match (like # or *)
+" and set the highlight.
+" The second incantation does the same thing, except it does not do a word search.
+" Fix the one below for FreeBSD
+" :nnoremap <silent><CR>  :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+":nnoremap <silent><CR>  :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls
 noremap <CR>    :let @/=expand('<cword>')<CR>:set hls<CR>
+
+
+vnoremap <silent> Q gq              " Disable Ex mode and use Q for formatting the current paragraph (or selection)
+nnoremap <silent> Q gqap
+vnoremap <silent> < <gv             " Remain in visual mode after '<' or '>'
+vnoremap <silent> > >gv
+
+
+nnoremap <silent> n  nzz
+nnoremap <silent> N  Nzz
+nnoremap <silent> *  nzz
+nnoremap <silent> #  #zz
+nnoremap <silent> g* g*zz
+nnoremap <silent> g# g#zz
+
+" Make * and # work with visual selection
+vnoremap <silent> * yq/i\V<Esc>p<CR>
+vnoremap <silent> # yq?i\V<Esc>p<CR>
+
+" Repeat last action for each line in the visual selection
+vnoremap <silent> . :normal .<CR>
+
+" Make ' jump to saved line & column rather than just line
+nnoremap ' `
+
 
 ]]
 
