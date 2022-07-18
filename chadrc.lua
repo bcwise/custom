@@ -11,6 +11,7 @@ M.options = {
    end,
 }
 
+
 local userPlugins = require "custom.plugins"
 
 M.plugins = {

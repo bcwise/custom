@@ -8,6 +8,88 @@ local opts = { noremap = true, silent = true}
 g.mapleader = ','
 
 --===================================================================
+--= Settings: Highlights
+--=    These highlight commands had to be put here, or they got overwritten.
+--= ===================================================================
+vim.cmd [[
+    " Don't let the colorschemes change the background color:
+    highlight Visual cterm=NONE ctermbg=236 ctermfg=NONE guibg=Grey40
+
+    " Highlight merge conflict markers
+    match Todo '\v^(\<|\=|\>){7}([^=].+)?$'
+
+    augroup ilikecursorline
+        " Color notifications
+        autocmd VimEnter * highlight NotifyGreen  gui=bold guifg=#8dfa81 cterm=bold ctermfg=119
+        autocmd VimEnter * highlight NotifyRed    gui=bold guifg=#e47574 cterm=bold ctermfg=167
+        autocmd VimEnter * highlight NotifyYellow gui=bold guifg=#fffb87 cterm=bold ctermfg=227
+
+
+        " Better diff colors.
+        " highlight DiffAdd    cterm=none ctermfg=bg ctermbg=Green   gui=none guifg=bg guibg=Green
+        " highlight DiffDelete cterm=none ctermfg=bg ctermbg=Red     gui=none guifg=
+        " highlight DiffChange cterm=none ctermfg=bg ctermbg=Yellow  gui=none
+        " highlight DiffText   cterm=none ctermfg=bg ctermbg=Magenta gui=none
+
+        ""----------------------------------------------------------------------------------------------
+        "" PLUGIN SETTINGS: Diff Highlighting (which the Git plugins use
+        ""----------------------------------------------------------------------------------------------
+        autocmd VimEnter * highlight SignColumn  guibg=#0b304e
+        autocmd VimEnter * highlight DiffAdd     gui=bold guifg=LightGreen   guibg=#0b304e cterm=bold ctermfg=10
+        autocmd VimEnter * highlight DiffChange  gui=bold guifg=LightYellow  guibg=#0b304e cterm=bold ctermfg=14
+        autocmd VimEnter * highlight DiffRemove  gui=bold guifg=LightRed     guibg=#0b304e cterm=bold ctermfg=12
+        autocmd VimEnter * highlight DiffText    gui=bold guifg=LightMagenta guibg=#0b304e cterm=bold ctermfg=13
+        " autocmd ColorScheme * highlight DiffAdd     gui=bold guifg==#2b506e guibg=#000000  ctermfg=2 ctermbg=0
+        "highlight GitGutterAdd      guifg=red ctermfg=9
+
+
+        "---------------------------------------------------
+        " Cursor Line
+        "---------------------------------------------------
+        " highlight clear cursorline
+        " augroup CLClear
+        "     set cursorline
+        " augroup End
+
+        " augroup CLNRSet
+        "     set cursorline
+        " augroup END
+        set cursorline
+        set cursorlineopt=line,number
+        autocmd VimEnter * :highlight CursorLine guibg=#282a2e
+
+
+        "---------------------------------------------------
+        " Cursor Column
+        "---------------------------------------------------
+        " Highlight the cursor column
+        " Highlight the cursor column
+        set cursorcolumn
+        " highlight CursorColumn ctermfg=White ctermbg=Yellow cterm=bold guifg=white guibg=yellow gui=bold
+        "highlight CursorColumn ctermfg=Black ctermbg=Yellow cterm=bold guifg=Black guibg=yellow gui=NONE
+
+        "---------------------------------------------------
+        " Line Number
+        "---------------------------------------------------
+        autocmd VimEnter * highlight LineNr       ctermfg=240 ctermbg=0 guifg=#2b506e guibg=#000000
+        autocmd VimEnter * highlight link         LineNrAbove  LineNr
+        autocmd VimEnter * highlight link         LineNrBelow  LineNr
+        autocmd VimEnter * highlight CursorLineNr cterm=underline ctermfg=11 gui=bold guifg=Yellow
+
+
+        "---------------------------------------------------
+        " SETTINGS: Matching
+        "---------------------------------------------------
+        " Settings: MATCHING
+        " Syntax: hi MatchParen cterm=STYLE ctermbg=BGCOL ctermfg=FGCOL
+        " Styles: bold underline none
+        autocmd VimEnter * hi MatchParen cterm=NONE,bold ctermfg=green ctermbg=red       ""Intensify matching parenthesis
+    augroup END
+]]
+
+
+
+--===================================================================
 --= Basic settings that need to be done early.
 --= ===================================================================
 o.compatible = false     -- Eliminate vi backwards-compatability
