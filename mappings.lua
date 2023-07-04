@@ -1,140 +1,87 @@
+---@type mappingsTable
 local M = {}
 
 M.general = {
-
-   n = {
-        -- This mapping allows us to press <enter> to search for the current
-        -- token under the cursor without stepping to the next match (like # or *)
-        -- and set the highlight.
-        -- The second incantation does the same thing, except it does not do a word search.
-        -- Fix the one below for FreeBSD
-        -- ['<CR>'] = {"<cmd>:let @/='\<<C-R>=expand('<cword>')<CR>\>'<CR>:set hls<CR>", "CR - Search"},
-        -- ['<CR>'] = {"<cmd> :let @ /= '<C-R>=expand(<cword>)<CR>' ", "CR - Search"},
-        -- ['<CR>'] = {"<cmd> :let @ /= '<C-R>=expand(<cword>)<CR>'<CR>:set hls<CR>", "CR - Search"},
-        --:nnoremap <silent><CR>  :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls
-        -- ['F10']= {"<cmd>:let @/='<C-R>=expand('<cword>')<CR>'<CR>:set hls<CR>", "CR - Search"},
-        -- ['F10']= {"<cmd> :let @/ = '<C-R>=expand(<cword>)<CR>'<CR>:set hls<CR>", "CR - Search"},
-
-        -- Shortcuts: search/replace
-        -- A function is for replacing the current-under-cursor word with
-        -- another pattern/word. Simply, it copies the word under cursor and inserts it
-        -- into a substitution command call. You only need to type the replacement pattern
-        -- and press the Enter key to actually replace the text:
-        -- replace the word under cursor
-        -- Select 's' to search/replace
-        -- [;] = {":%s/\<<c-r><c-w>\>//g<left><left>", "Globally replace all"}
-        -- nmap ; :%s/\<<c-r><c-w>\>/
-        -- [';'] = {"<cmd> :%s/<c-r><c-w>//g<left><left><CR>", "Globally replace all"}
-        [';'] = {"<cmd> :%s/<C-R>_<C-W>//g<CR>", "Globally replace all"}
-
-        -- Shortcuts: Substitute
-        -- Setup command to replace current word with last yanked, cut, etc. word.
-        -- Select "S" to replace
-        -- [S] = {"<cmd> :let @x=@'<CR>'_diw"xP", "S to select for global replace"},
-        -- ['S'] = {"<cmd> :let @x=@'<CR>'_diwxP", "S to select for global replace"},
-
-
-   }
-}
-M.ctrlspace = {
-   n = {
-      ["<C-space>"] = {"<cmd> :CtrlSpace<CR>", "CtrlSpace"},
-   },
-   v = {
-      ["<C-space>"] = {"<cmd> :CtrlSpace<CR>", "CtrlSpace"},
-   },
-}
-
-M.nvimtree = {
-   n = {
-      -- toggle
-      ["<leader>e"] = { "<cmd> NvimTreeToggle <CR>", "   toggle nvimtree" },
-   },
-}
-
-M.neogit = {
   n = {
-    ["<leader>gg"] = {"<cmd> Neogit <CR>", "neogit"}
-  }
-}
+    ["<C-Space>"] = { "<Cmd>CtrlSpace<CR>", "Opens up the CtrlSpace window with the current buffers.", opts = { nowait = true } },
+    -- ["ga"] = { "<Cmd>EasyAlign<CR>", "Calls up the EasyAlign program to align your code."},
 
-M.telescope = {
-  n = {
-    ["<leader><leader>"] = {"<cmd> Telescope find_files <CR>", "find files"},
-    ["<leader>x"] = {"<cmd> Telescope commands <CR>", "commands"},
-    ["<leader>bb"] = {"<cmd> Telescope buffers <CR>", "find buffers"},
-    ["<leader>bd"] = {"<cmd> bdelete <CR>", "delete buffer"},
-    ["<leader>bn"] = {"<cmd> enew <CR>", "new buffer"},
-    ["<leader>pp"] = {"<cmd> Telescope projects <CR>", "switch project"},
-    ["<leader>/"] = {"<cmd> Telescope live_grep <CR>", "grep project"}
-  }
-}
+    -- Search results centered
+    ["n"]  = { "nzz", "Searches and centers the results."},
+    ["N"]  = { "Nzz", "Searches and centers the results."},
+    ["*"]  = { "*zz", "Searches and centers the results."},
+    ["#"]  = { "#zz", "Searches and centers the results."},
+    ["g*"] = { "g*zz", "Searches and centers the results."},
+    ["g#"] = { "G#zz", "Searches and centers the results."},
 
-M.tests = {
-  n = {
-    ["<leader>tt"] = {"<cmd> Other test<CR>", "test file"},
-    ["<leader>tv"] = {"<cmd> TestFile <CR>", "test file"},
-    ["<leader>ta"] = {"<cmd> TestSuite <CR>", "test project"},
-    ["<leader>ts"] = {"<cmd> TestNearest <CR>", "test nearest"},
-  }
-}
 
-M.lsp = {
-  n = {
-    ["<leader>cd"] = {"<cmd> Telescope lsp_definitions <CR>", "lsp definition"},
-    ["<leader>cr"] = {"<cmd> Telescope lsp_references <CR>", "lsp references"},
-    ["<leader>cs"] = {"<cmd> Telescope lsp_document_symbols <CR>", "lsp document symbols"},
-    ["<leader>cw"] = {"<cmd> Telescope lsp_workspace_symbols <CR>", "lsp workspace symbols"},
-    ["<leader>ca"] = {
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      "lsp action",
-    },
-    ["<leader>cR"] = {
-      function()
-        vim.lsp.buf.rename()
-      end,
-      "lsp rename",
-    },
-  }
-}
+--[";"]    = ":%s/\\<<c-r><c-w>\\>//g<left><left>"
+--["<CR>"] = ":let @/=expand('<cword>')<CR>:set hls<CR>"
+--["S"]    = ':let @x=@"<CR>"_diw"xP'
 
-M.eval = {
-  n = {
-    ["<leader>eb"] = {"<cmd> ConjureEvalBuf <CR>", "eval buffer"},
-    ["<leader>ef"] = {"<cmd> ConjureEvalCurrentForm <CR>", "eval current form"},
-    ["<leader>er"] = {"<cmd> ConjureEvalRootForm <CR>", "eval root form"},
-    ["<leader>ev"] = {"<cmd> ConjureEvalVisual <CR>", "eval visual"},
-    ["<leader>ew"] = {"<cmd> ConjureEvalWord <CR>", "eval word"},
-    ["<leader>e!"] = {"<cmd> ConjureEvalReplaceForm <CR>", "eval and replace form"},
-    ["<leader>et"] = {"<cmd> ConjureCljRunCurrentNsTests <CR>", "Run NS tests"},
-    ["<leader>eT"] = {"<cmd> ConjureCljRunAllTests <CR>", "Run all tests"},
-  }
-}
+-- " Shortcuts: search/replace
+-- " A function is for replacing the current-under-cursor word with
+-- " another pattern/word. Simply, it copies the word under cursor and inserts it
+-- " into a substitution command call. You only need to type the replacement pattern
+-- " and press the Enter key to actually replace the text:
+    [";"] = { ":%s/<C-r><C-w>//g<Left><Left>", "Search/replace everywhere for the word under the cursor."},
 
-M.nav = {
-  n = {
-    ["<C-a>"] = {"<cmd> bprevious <CR>", "previous buffer"},
-    ["<C-d>"] = {"<cmd> bnext <CR>", "next buffer"},
-    ["<leader>wv"] = {"<cmd> vsplit <CR>", "split vertical"},
-    ["<leader>wh"] = {"<cmd> split <CR>", "split horizontal"},
-    ["<leader>wd"] = {"<cmd> close <CR>", "close window"},
-    ["<leader>gb"] = {"<cmd> Telescope git_branches <CR>", "git branches"},
-    ["<leader>o"] = {"<cmd> Other<CR>", "other file"},
+-- " Shortcuts: Substitute
+-- " Setup command to replace current word with last yanked, cut, etc. word.
+-- " Select "S" to replace
+    ["S"] = { "ciw<C-r>0<Esc>", "Replace word under cursor." },
+
+    -- Use the <Enter> key to select the whole word under the cursor.
+--["<CR>"] = { "viwy   y/\V<C-R>"<CR> :let @/ = '\V'<CR>", "Select the whole word under the cursor"},
+--    ["<CR>"] = { "viwy/\V<C-R><CR> :let @/ = '\V'<CR>", "Select the whole word under the cursor"},
+--TODO(fix):--    ["<CR>"] = { "viwy :let @/ = '\V'<CR>", "Select the whole word under the cursor"},
+
+
+    -- Mapping: EasyAlignment
+    ["ea"] = { "<Plug>(EasyAlign)", "Calls up the EasyAlign program to align your code."},
+
+    -- Mappings: Telescope
+    ["<leader>fg"]    = { "<cmd> Telescope live_grep <CR>", "Live grep" },
+    ["<leader>fp"]    = { "<cmd>lua require('telescope.builtin').planets()<cr>", "" },
+    ["<leader>fq"]    = { "<cmd>lua require('telescope.builtin').quickfix()<cr>", "Show quickfix contents" },
+    ["<leader>fr"]    = { "<cmd>lua require('telescope.builtin').registers()<cr>", "Show register contents" },
+    ["<leader>fs"]    = { "<cmd>lua require('telescope.builtin').find_string()<cr>", "Find a string" },
+    ["<leader>ft"]    = { "<cmd>lua require('telescope.builtin').tags()<cr>", "Display help tags" },
+    ["<leader>fts"]   = { "<cmd>lua require('telescope.builtin').treesitter()<cr>", "Display Treesitter info" },
+    ["<leader>fw"]    = { "<cmd>lua require('telescope.builtin').grep_string()<cr>", "Search for the string under the cursor" },
+-- Find LSP...
+    ["<leader>flr"]   = { "<cmd> Telescope lsp_references <CR>", "LSP References", "Show LSP references" },
+    ["<leader>flds"]  = { "<cmd> Telescope lsp_document_symbols <CR>", "Show LSP symbols for the current document" },
+    ["<leader>flws"]  = { "<cmd> Telescope lsp_workspace_symbols <CR>", "Show workspace symbols" },
+    ["<leader>fldws"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", "Show LSP dynamic workspace symbols" },
+    ["<leader>fd"]    = { "<cmd> Telescope diagnostics <CR>", "Show diagnostics" },
+    ["<leader>fli"]   = { "<cmd> Telescope lsp_implementations <CR>", "Show LSP implementations" },
+    ["<leader>fld"]   = { "<cmd> Telescope lsp_definitions <CR>", "Show LSP definitions" },
+    ["<leaderfltd"]   = { "<cmd> Telescope lsp_type_definitions <CR>", "Show LSP type definitions" },
+
   },
+
+  v = {
+
+    -- Stay in visual mode after '<' or '>'
+    ["<"] = { "<gv" , "Remain in visual mode after '<' " },
+    [">"] = { ">gv" , "Remain in visual mode after '>' " },
+
+    -- Make * and # work with visual selection
+    -- ["*"] = { "yq/i\V<Esc>p<CR>", "Make * work with a visual selection." },
+    -- ["#"] = { "yq?i\V<Esc>p<CR>", "Make # work with a visual selection." },
+
+
+    -- Repeat last action for each line in the visual selection
+    ["."] = {":normal .<CR>", "Repeat last action for each line in the visual selection."},
+  },
+
+  x = {
+    ["ea"] = { "<Plug>(EasyAlign)", "Calls up the EasyAlign program to align your code."}
+  }
+
 }
 
-M.winresizer = {
-   n = {
-      ["<leader>w"] = { "<cmd> WinResizerStartResize<CR>", "   WinResizer" },
-   },
-}
-
--- M.disabled = {
---    n = {
---       ["<leader>e"] = ""
---    }
--- }
+-- more keybinds!
 
 return M
