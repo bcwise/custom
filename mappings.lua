@@ -18,6 +18,7 @@ M.general = {
 --[";"]    = ":%s/\\<<c-r><c-w>\\>//g<left><left>"
 --["<CR>"] = ":let @/=expand('<cword>')<CR>:set hls<CR>"
 --["S"]    = ':let @x=@"<CR>"_diw"xP'
+    ["<CR>"] = { ":let @/=expand('<cword>')<CR>:set hls<CR>", "<Enter> selects for searching the current word under the cursor."},
 
 -- " Shortcuts: search/replace
 -- " A function is for replacing the current-under-cursor word with
