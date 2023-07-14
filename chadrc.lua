@@ -158,38 +158,42 @@ opt.ruler       = true
 -- -- set pumheight=10  " Maximum number of items to show in popup menu
 -- -- set pumblend=10  " pseudo transparency for completion menu
 -- -- set winblend=5  " pseudo transparency for floating window
---
---
+
+
+-- --------------------------------------------------------------------
+-- -- Settings: Scrolling
+-- --------------------------------------------------------------------
+cmd( "set sidescroll=10" )
+cmd( "set scrolloff=5" )
+
 -- --------------------------------------------------------------------
 -- -- Settings: Searching
 -- --------------------------------------------------------------------
--- opt.hlsearch   = true           -- Highlight search
--- opt.ignorecase = true           -- Ignore case when searching.
--- opt.incsearch  = true           -- Incremental search
--- opt.smartcase  = true           -- Searches ignoring case unless an uppercase is pressed.
--- opt.wrapscan   = false          -- does not wrap back to the beginning for search.
---
---
+opt.hlsearch   = true           -- Highlight search
+opt.ignorecase = true           -- Ignore case when searching.
+opt.incsearch  = true           -- Incremental search
+opt.smartcase  = true           -- Searches ignoring case unless an uppercase is pressed.
+opt.wrapscan   = false          -- does not wrap back to the beginning for search.
+
+
 -- --------------------------------------------------------------------
 -- -- Settings: Sign Column
 -- --------------------------------------------------------------------
 opt.signcolumn = "auto:4"
---
---
+
+
 -- --------------------------------------------------------------------
 -- -- Settings: WRAP
 -- --------------------------------------------------------------------
--- cmd( "set nowrap" )
--- cmd( "set sidescroll=10" )
--- cmd( "set scrolloff=5" )
---
---
--- --------------------------------------------------------------------
--- -- Settings: UNDO (BACKUP, and SWAP)
--- -- The her/central.vim will create the backup, swap, and undo
--- -- directories and set the flag so that all three will be active.
--- --------------------------------------------------------------------
--- cmd( "set undolevels =100000" ) -- Entries of the undo list
+cmd( "set nowrap" )
+
+
+--------------------------------------------------------------------
+-- Settings: UNDO (BACKUP, and SWAP)
+-- The her/central.vim will create the backup, swap, and undo
+-- directories and set the flag so that all three will be active.
+--------------------------------------------------------------------
+cmd( "set undolevels =100000" ) -- Entries of the undo list
 
 
 
