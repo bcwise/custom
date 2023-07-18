@@ -1,4 +1,5 @@
 local cmd = vim.cmd
+local g   = vim.g
 local overrides = require("custom.configs.overrides")
 
 ---@type NvPluginSpec[]
@@ -64,6 +65,46 @@ local plugins = {
   {
     "sainnhe/edge",
   },
+
+  -- {
+  --   "ludovicchabant/vim-gutentags",
+  --   lazy = false,
+  --   -- config = function()
+  --   --     require("user.plugins.config.others").gutentags()
+  --   -- end,
+  --   ft = {
+  --       "tex",
+  --       "bib",
+  --   },
+  -- },
+
+  {
+    'wfxr/minimap.vim',
+    lazy = false,
+    build = "cargo install --locked code-minimap",
+    -- cmd = {"Minimap", "MinimapClose", "MinimapToggle", "MinimapRefresh", "MinimapUpdateHighlight"},
+    config = function ()
+      g.minimap_width                       = 10
+      g.minimap_auto_start                  = 1
+      g.minimap_auto_start_win_enter        = 1
+      g.minimap_highlight_search            = 1
+      g.minimap_git_colors                  = 1
+      g.minimap_enable_highlight_colorgroup = 1
+    end,
+  },
+
+  {
+    "lervag/vimtex",
+    lazy = false,
+    config = function()
+      require("custom.configs.vimtex")
+    end,
+    ft = {
+      "tex",
+      "bib",
+    },
+  },
+
 
   -- Removed this to reload the configuration files
   -- {
