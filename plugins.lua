@@ -78,20 +78,30 @@ local plugins = {
   --   },
   -- },
 
+
   {
-    'wfxr/minimap.vim',
+    "kevinhwang91/nvim-hlslens",
     lazy = false,
-    build = "cargo install --locked code-minimap",
-    -- cmd = {"Minimap", "MinimapClose", "MinimapToggle", "MinimapRefresh", "MinimapUpdateHighlight"},
-    config = function ()
-      g.minimap_width                       = 10
-      g.minimap_auto_start                  = 1
-      g.minimap_auto_start_win_enter        = 1
-      g.minimap_highlight_search            = 1
-      g.minimap_git_colors                  = 1
-      g.minimap_enable_highlight_colorgroup = 1
+    config = function()
+      require("hlslens").setup()
     end,
   },
+
+
+  -- {
+  --   'wfxr/minimap.vim',
+  --   lazy = false,
+  --   build = "cargo install --locked code-minimap",
+  --   -- cmd = {"Minimap", "MinimapClose", "MinimapToggle", "MinimapRefresh", "MinimapUpdateHighlight"},
+  --   config = function ()
+  --     g.minimap_width                       = 10
+  --     g.minimap_auto_start                  = 1
+  --     g.minimap_auto_start_win_enter        = 1
+  --     g.minimap_highlight_search            = 1
+  --     g.minimap_git_colors                  = 1
+  --     g.minimap_enable_highlight_colorgroup = 1
+  --   end,
+  -- },
 
   {
     "lervag/vimtex",
