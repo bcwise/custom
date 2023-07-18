@@ -3,8 +3,9 @@ local M = {}
 
 M.general = {
   n = {
-    ["<C-Space>"] = { "<Cmd>CtrlSpace<CR>", "Opens up the CtrlSpace window with the current buffers.", opts = { nowait = true } },
-    -- ["ga"] = { "<Cmd>EasyAlign<CR>", "Calls up the EasyAlign program to align your code."},
+    --****************************************************************
+    -- General Settings: Normal
+    --****************************************************************
 
     -- Search results centered
     ["n"]  = { "nzz", "Searches and centers the results."},
@@ -37,11 +38,28 @@ M.general = {
 --    ["<CR>"] = { "viwy/\V<C-R><CR> :let @/ = '\V'<CR>", "Select the whole word under the cursor"},
 --TODO(fix):--    ["<CR>"] = { "viwy :let @/ = '\V'<CR>", "Select the whole word under the cursor"},
 
+    -- Remove trailing whitespace characters
+    ["<leader>-S"]   = {"<leader><space>", "<cmd>DeleteTrailingWhitespace<cr>", "Remove trailing space" },
 
-    -- Mapping: EasyAlignment
+
+    ------------------------------------------------------------------
+    -- Plugin (Mode: N): Ctrl-Space
+    ------------------------------------------------------------------
+    ["<C-Space>"] = { "<Cmd>CtrlSpace<CR>", "Opens up the CtrlSpace window with the current buffers.", opts = { nowait = true } },
+
+    ------------------------------------------------------------------
+    -- Plugin (Mode: N): EasyAlign
+    ------------------------------------------------------------------
     ["ea"] = { "<Plug>(EasyAlign)", "Calls up the EasyAlign program to align your code."},
 
-    -- Mappings: Telescope
+    ------------------------------------------------------------------
+    -- Plugin (Mode: N): MiniMap
+    ------------------------------------------------------------------
+    ["<leader>mm"] = { "<Cmd>MinimapToggle<CR>", "Toggles the mini map."},
+
+    ------------------------------------------------------------------
+    -- Plugin (Mode: N): Telescope
+    ------------------------------------------------------------------
     ["<leader>fg"]    = { "<Cmd> Telescope live_grep <CR>",   "Live grep" },
     ["<leader>fp"]    = { "<Cmd> Telescope planets <CR>",     "" },
     ["<leader>fq"]    = { "<Cmd> Telescope quickfix <CR>",    "Show quickfix contents" },
@@ -50,7 +68,7 @@ M.general = {
     ["<leader>ft"]    = { "<Cmd> Telescope tags <CR>",        "Display help tags" },
     ["<leader>fts"]   = { "<Cmd> Telescope treesitter <CR>",  "Display Treesitter info" },
     ["<leader>fw"]    = { "<Cmd> Telescope grep_string <CR>", "Search for the string under the cursor" },
--- Find LSP...
+    -- Find LSP...
     ["<leader>flr"]   = { "<Cmd> Telescope lsp_references <CR>",                "LSP References", "Show LSP references" },
     ["<leader>flds"]  = { "<Cmd> Telescope lsp_document_symbols <CR>",          "Show LSP symbols for the current document" },
     ["<leader>flws"]  = { "<Cmd> Telescope lsp_workspace_symbols <CR>",         "Show workspace symbols" },
@@ -60,9 +78,16 @@ M.general = {
     ["<leader>fld"]   = { "<Cmd> Telescope lsp_definitions <CR>",               "Show LSP definitions" },
     ["<leaderfltd"]   = { "<Cmd> Telescope lsp_type_definitions <CR>",          "Show LSP type definitions" },
 
+  -- Move current line up and down
+  ["<A-k>"]  = {'<cmd>call utils#SwitchLine(line("."), "up")<cr>', "Move line up" },
+  ["<A-j>"]  = {'<cmd>call utils#SwitchLine(line("."), "down")<cr>', "Move line down" },
+
   },
 
   v = {
+    --****************************************************************
+    -- General Settings: Visual
+    --****************************************************************
 
     -- Stay in visual mode after '<' or '>'
     ["<"] = { "<gv" , "Remain in visual mode after '<' " },
@@ -72,17 +97,26 @@ M.general = {
     -- ["*"] = { "yq/i\V<Esc>p<CR>", "Make * work with a visual selection." },
     -- ["#"] = { "yq?i\V<Esc>p<CR>", "Make # work with a visual selection." },
 
-
     -- Repeat last action for each line in the visual selection
-    ["."] = {":normal .<CR>", "Repeat last action for each line in the visual selection."},
+    ["."] = {":normal .<CR>", "Repeat last action for each line in the visual selection."}
   },
 
   x = {
-    ["ea"] = { "<Plug>(EasyAlign)", "Calls up the EasyAlign program to align your code."}
+    --****************************************************************
+    -- General Settings: X
+    --****************************************************************
+    -- Move current visual-line selection up and down
+    ["<A-k>"] = {'<cmd>call utils#MoveSelection("up")<cr>', "Move selection up" },
+    ["<A-j>"] = {'<cmd>call utils#MoveSelection("down")<cr>', "Move selection down" },
+
+    ------------------------------------------------------------------
+    -- Plugin (Mode: X): EasyAlign
+    ------------------------------------------------------------------
+    ["ea"] = { "<Plug>(EasyAlign)", "Calls up the EasyAlign program to align your code."},
+
   }
 
-}
-
 -- more keybinds!
+}
 
 return M
