@@ -13,6 +13,11 @@ opt.compatible = false          -- Eliminate vi backwards-compatability
 cmd( "filetype plugin indent on" )     -- required!
 cmd( "syntax on" )              -- Syntax highlighting
 
+-- " " File and script encoding settings for vim
+cmd( " set fileencoding=utf-8" )
+-- " set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+
+
 --------------------------------------------------------------------
 -- Settings: ABBREVIATIONS (typo corrections)
 --------------------------------------------------------------------
@@ -62,10 +67,10 @@ cmd( "set nofoldenable" )
 --------------------------------------------------------------------
 cmd( "set autoread" )                           -- Automatically read a file when it is changed from the outside
 cmd( "set backspace        =indent,eol,start" ) -- Allow backspacing over everything in insert mode
+-- cmd( "highlight clear CursorColumn" )
+-- cmd( "highlight clear CursorLine" )
 cmd( "set cursorcolumn" )                       -- Show cursor column (initialized here, but turned on and off in autocmd section)
 cmd( "set cursorline" )                         -- Show cursor line (initialized here, but turned on and off in autocmd section)
-cmd( "highlight clear CursorColumn" )
-cmd( "highlight clear CursorLine" )
 cmd( "set history          =10000" )            -- Keep 10000 lines of command history
 cmd( "set modelines        =0" )                -- Prevent some security exploits
 cmd( "set nostartofline" )                      -- Don't jumpt to the first character when paging
@@ -97,6 +102,7 @@ opt.copyindent  = true          -- Copies the indentation from the line above
 opt.expandtab   = true          -- By default, we will expand tabs to spaces, turn this off when needed (i.e. a Makefile)
 opt.shiftround  = true          -- When at 3 spaces, and hit > ... go to 4, not 7
 opt.shiftwidth  = 2
+opt.smartindent = true
 opt.softtabstop = 2
 opt.tabstop     = 2
 
@@ -179,7 +185,7 @@ opt.wrapscan   = false          -- does not wrap back to the beginning for searc
 -- --------------------------------------------------------------------
 -- -- Settings: Sign Column
 -- --------------------------------------------------------------------
-opt.signcolumn = "auto:4"
+opt.signcolumn = "auto:2"
 
 
 -- --------------------------------------------------------------------
