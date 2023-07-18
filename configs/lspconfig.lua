@@ -6,7 +6,7 @@ local lspconfig = require "lspconfig"
 -- if you just want default config for the servers then put them in a table
 local servers = { "arduino_language_server", "awk_ls", "bashls", "clangd", "cmake", "cssls", "dockerls", "erlangls",
                   "html", "jsonls", "lua_ls", "perlls", "puppet", "pylsp", "pylyzer", "pyright", "rls", "rust_analyzer",
-                  "sqlls", "tsserver", "vimls" }
+                  "sqlls", "texlab", "tsserver", "vimls" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -17,3 +17,16 @@ end
 
 -- 
 -- lspconfig.pyright.setup { blabla}
+--
+--
+-- -- Without the loop, you would have to manually set up each LSP 
+-- 
+-- lspconfig.html.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- }
+--
+-- lspconfig.cssls.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- }
