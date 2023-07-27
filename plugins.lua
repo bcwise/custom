@@ -24,7 +24,6 @@ local plugins = {
     end, -- Override to setup mason-lspconfig
   },
 
-  -- override plugin configs
   {
     "williamboman/mason.nvim",
     opts = overrides.mason
@@ -50,14 +49,6 @@ local plugins = {
   },
 
   {
-    "vim-ctrlspace/vim-ctrlspace",
-    lazy = false,
-    config = function()
-      cmd( "let g:CtrlSpaceDefaultMappingKey = '<C-space> ' " )
-    end,
-  },
-
-  {
     "junegunn/vim-easy-align",
     lazy = false,
   },
@@ -66,17 +57,17 @@ local plugins = {
     "sainnhe/edge",
   },
 
-  -- {
-  --   "ludovicchabant/vim-gutentags",
-  --   lazy = false,
-  --   -- config = function()
-  --   --     require("user.plugins.config.others").gutentags()
-  --   -- end,
-  --   ft = {
-  --       "tex",
-  --       "bib",
-  --   },
-  -- },
+  {
+    "ludovicchabant/vim-gutentags",
+    lazy = false,
+    -- config = function()
+    --     require("user.plugins.config.others").gutentags()
+    -- end,
+    ft = {
+        "tex",
+        "bib",
+    },
+  },
 
 
   {

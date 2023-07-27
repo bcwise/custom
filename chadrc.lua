@@ -5,7 +5,6 @@ local opt = vim.opt
 ---@type ChadrcConfig
 local M = {}
 
-
 -- Path to overriding theme and highlights files
 local highlights = require "custom.highlights"
 g.mapleader = ","
@@ -148,8 +147,8 @@ opt.list = true
 -- cmd( "hi MatchParen cterm=NONE,bold ctermfg=green ctermbg=red" )       -- Intensify matching parenthesis
 -- -- Set matching pairs of characters and highlight matching brackets
 -- cmd( "set matchpairs+=<:>,「:」,『:』,【:】,“:”,‘:’,《:》" )
---
---
+
+
 --------------------------------------------------------------------
 -- Settings: Numbers
 --------------------------------------------------------------------
