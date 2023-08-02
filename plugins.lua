@@ -2,6 +2,15 @@ local cmd = vim.cmd
 local g   = vim.g
 local overrides = require("custom.configs.overrides")
 
+vim.opt.termguicolors = true
+vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+vim.o.spell = true
+
 ---@type NvPluginSpec[]
 local plugins = {
 
@@ -24,39 +33,13 @@ local plugins = {
     end, -- Override to setup mason-lspconfig
   },
 
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        -- defaults 
-        "vim",
-        "lua",
-        "python",
-
-        -- web dev 
-        "html",
-        "css",
-        "javascript",
-        "typescript",
-        "tsx",
-        "json",
-
-        -- LaTeX
-        LaTeX,
-
-        -- Shell
-        "bashls",
-
-
-        -- "vue", "svelte",
-
-       -- low level
-        "c",
-        "cpp",
-        "zig"
-      },
-    },
-  },
+--   {
+--     "vim-ctrlspace/vim-ctrlspace",
+--     lazy = false,
+--     config = function()
+--       require("custom.configs.ctrlspace")
+--     end,
+--   },
 
   {
     "williamboman/mason.nvim",
@@ -74,6 +57,12 @@ local plugins = {
   },
 
   -- Install a plugin
+
+  {
+     "vim-scripts/deletetrailingwhitespace",
+    lazy = false,
+  },
+
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
@@ -89,6 +78,12 @@ local plugins = {
 
   {
     "sainnhe/edge",
+  },
+
+  {
+    "folke/trouble.nvim",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons", lazy = false },
   },
 
   {
@@ -127,6 +122,134 @@ local plugins = {
   --     g.minimap_enable_highlight_colorgroup = 1
   --   end,
   -- },
+
+
+  -- Rainbow indent plugin
+  {
+    "p00f/nvim-ts-rainbow",
+    lazy = false,
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        rainbow = {
+          enable = true,
+          extended_mode = true,
+          max_file_lines = nil,
+        },
+      }
+    end,
+  },
+
+  -- Rainbow brackets plugin
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    lazy = false,
+    config = function()
+      require("indent_blankline").setup {
+        use_treesitter = true,
+        space_char_blankline = " ",
+        show_current_context_start = true,
+        char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+          "IndentBlanklineIndent3",
+          "IndentBlanklineIndent4",
+          "IndentBlanklineIndent5",
+          "IndentBlanklineIndent6",
+        },
+        show_current_context = false,
+        filetype_exclude = { "help", "dashboard", "dashpreview", "NvimTree", "vista", "sagahover" },
+        buftype_exclude = { "terminal", "nofile" },
+        context_patterns = {
+          "class",
+          "function",
+          "method",
+          "block",
+          "list_literal",
+          "selector",
+          "^if",
+          "^table",
+          "if_statement",
+          "while",
+          "for",
+          "loop",
+          "fn",
+          "func",
+        },
+      }
+    end,
+  },
+
+
+  {
+    "echasnovski/mini.indentscope",
+    version = false, -- wait till new 0.7.0 release to put it back on semver
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      -- symbol = "▏",
+      symbol = "│",
+      options = { try_as_border = true },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = {
+          "help",
+          "alpha",
+          "dashboard",
+          "neo-tree",
+          "Trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+          "lazyterm",
+        },
+        callback = function()
+          vim.b.miniindentscope_disable = false
+        end,
+      })
+    end,
+  },
+
+  {
+    "rcarriga/nvim-notify",
+    keys = {
+      {
+        "<leader>un",
+        function()
+          require("notify").dismiss({ silent = true, pending = true })
+        end,
+        desc = "Dismiss all Notifications",
+      },
+    },
+    opts = {
+      timeout = 3000,
+      max_height = function()
+        return math.floor(vim.o.lines * 0.75)
+      end,
+      max_width = function()
+        return math.floor(vim.o.columns * 0.75)
+      end,
+    },
+    -- init = function()
+    --   -- when noice is not enabled, install notify on VeryLazy
+    --   local Util = require("lazyvim.util")
+    --   if not Util.has("noice.nvim") then
+    --     Util.on_very_lazy(function()
+    --       vim.notify = require("notify")
+    --     end)
+    --   end
+    -- end,
+  },
+
+
+  {
+    "simrat39/symbols-outline.nvim",
+    lazy = false,
+    config = function()
+      require("symbols-outline").setup()
+    end,
+  },
+
 
   {
     "lervag/vimtex",

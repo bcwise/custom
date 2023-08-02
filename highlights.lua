@@ -10,6 +10,14 @@ M.override = {
   Comment = {
     italic = true,
   },
+
+  -- The number column
+  LineNr       = { bg = "black",
+                   fg = "#2b506e"},
+  CursorLineNr = { gui = bold, bg = "Black", fg = "yellow"},
+  CursorLine   = { fg = "white", bg = "lightgray"},
+
+  SignColumn   = { gui = bold, bg = "#2b506e", fg = "LightGray"},
 }
 
 ---@type HLTable

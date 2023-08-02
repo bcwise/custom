@@ -47,15 +47,18 @@ M.general = {
     ------------------------------------------------------------------
     ["<C-Space>"] = { "<Cmd>CtrlSpace<CR>", "Opens up the CtrlSpace window with the current buffers.", opts = { nowait = true } },
 
+
     ------------------------------------------------------------------
     -- Plugin (Mode: N): EasyAlign
     ------------------------------------------------------------------
     ["ea"] = { "<Plug>(EasyAlign)", "Calls up the EasyAlign program to align your code."},
 
+
     ------------------------------------------------------------------
-    -- Plugin (Mode: N): MiniMap
+    -- Plugin (Mode: N): Symbols-Outline
     ------------------------------------------------------------------
-    ["<leader>mm"] = { "<Cmd>MinimapToggle<CR>", "Toggles the mini map."},
+    ["<leader>o"]  = { "<Cmd>SymbolsOutline<CR>", "Toggles Symbol Outline."},
+
 
     ------------------------------------------------------------------
     -- Plugin (Mode: N): Telescope
@@ -77,6 +80,17 @@ M.general = {
     ["<leader>fli"]   = { "<Cmd> Telescope lsp_implementations <CR>",           "Show LSP implementations" },
     ["<leader>fld"]   = { "<Cmd> Telescope lsp_definitions <CR>",               "Show LSP definitions" },
     ["<leaderfltd"]   = { "<Cmd> Telescope lsp_type_definitions <CR>",          "Show LSP type definitions" },
+
+    ------------------------------------------------------------------
+    -- Plugin (Mode: N): Trouble
+    -------------------------------------------------------------------- Lua
+    ["<leader>xx"] = {"<Cmd>TroubleToggle<CR>",                       "Trouble Toggle list window"},
+    ["<leader>xw"] = {"<Cmd>TroubleToggle workspace_diagnostics<CR>", "Trouble Toggle: Workspace Diagnostics"},
+    ["<leader>xd"] = {"<Cmd>TroubleToggle document_diagnostics<CR>",  "Trouble Toggle: Document  Diagnostics"},
+    ["<leader>xq"] = {"<Cmd>TroubleToggle quickfix<CR>",              "Trouble Toggle: Quickfix"},
+    ["<leader>xl"] = {"<Cmd>TroubleToggle loclist<CR>",               "Trouble Toggle: loclist"},
+    ["gR"]         = {"<Cmd>TroubleToggle lsp_references<CR>",        "Trouble Toggle: LSP References"},
+
 
   -- Move current line up and down
   ["<A-k>"]  = {'<cmd>call utils#SwitchLine(line("."), "up")<cr>', "Move line up" },

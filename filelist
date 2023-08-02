@@ -1,9 +1,0 @@
-./configs/lspconfig.lua
-./configs/vimtex.lua
-./configs/null-ls.lua
-./configs/overrides.lua
-./highlights.lua
-./plugins.lua
-./mappings.lua
-./init.lua
-./chadrc.lua
