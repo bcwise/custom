@@ -47,6 +47,15 @@ opt.winblend=0
 
 
 --------------------------------------------------------------------
+-- Settings: Cursor
+--------------------------------------------------------------------
+-- cmd( "highlight clear CursorColumn" )
+-- cmd( "highlight clear CursorLine" )
+opt.cursorcolumn = true
+opt.cursorline   = true
+
+
+--------------------------------------------------------------------
 -- Settings: Diff
 --------------------------------------------------------------------
 cmd( "set diffopt=" )
@@ -74,10 +83,6 @@ cmd( "set nofoldenable" )
 --------------------------------------------------------------------
 cmd( "set autoread" )                           -- Automatically read a file when it is changed from the outside
 cmd( "set backspace        =indent,eol,start" ) -- Allow backspacing over everything in insert mode
--- cmd( "highlight clear CursorColumn" )
--- cmd( "highlight clear CursorLine" )
-cmd( "set cursorcolumn" )                       -- Show cursor column (initialized here, but turned on and off in autocmd section)
-cmd( "set cursorline" )                         -- Show cursor line (initialized here, but turned on and off in autocmd section)
 cmd( "set history          =10000" )            -- Keep 10000 lines of command history
 cmd( "set modelines        =0" )                -- Prevent some security exploits
 cmd( "set nostartofline" )                      -- Don't jumpt to the first character when paging
