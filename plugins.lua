@@ -33,6 +33,11 @@ local plugins = {
     end, -- Override to setup mason-lspconfig
   },
 
+--   If you load vim-ctrlspace, it causes a side effect
+  --   that when you load multiple files from the command
+  --   line (e.g. nvim *.cpp), only the first file has syntax highlighting,
+  --   the remainder of the files, the filetype is unknown (unless you run it manually again).
+  --   The workaround is to use  Telescope (<leader>fb : show buffers (the same thing as ctrlspace))
 --   {
 --     "vim-ctrlspace/vim-ctrlspace",
 --     lazy = false,
@@ -58,17 +63,30 @@ local plugins = {
 
   -- Install a plugin
 
-  {
-     "vim-scripts/deletetrailingwhitespace",
-    lazy = false,
-  },
-
+  -- NVCHAD's example of adding a better escape handler.
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
     config = function()
       require("better_escape").setup()
     end,
+  },
+
+  -- Central.vim: manages your backup, swap, and undo directories and files.
+  {
+    "her/central.vim",
+    lazy = false,
+    config = function()
+      cmd("let g:central_cleanup_enable = 30")
+      cmd("let g:central_multiple_backup_enable = 50")
+    end,
+  },
+  -- DeleteTrailingWhitespace.
+  -- Adds the function to delete trailing whitespace:while
+  -- DeleteTrailingWhitespace.
+  {
+     "vim-scripts/deletetrailingwhitespace",
+    lazy = false,
   },
 
   {
