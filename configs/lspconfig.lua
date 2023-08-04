@@ -39,6 +39,7 @@ local clangd_cmd_args = {
 lspconfig.clangd.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  offsetEncoding = { "utf-16" },
 
   keys = {
     { "<leader>cR", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
@@ -56,9 +57,6 @@ lspconfig.clangd.setup {
         fname
       ) or require("lspconfig.util").find_git_ancestor(fname)
   end,
-  capabilities = {
-    offsetEncoding = { "utf-16" },
-  },
   cmd = clangd_cmd_args,
   init_options = {
     usePlaceholders = true,
