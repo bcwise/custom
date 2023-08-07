@@ -118,6 +118,7 @@ local plugins = {
 
 
   {
+    -- TODO: configure setup
     "kevinhwang91/nvim-hlslens",
     lazy = false,
     config = function()
@@ -125,6 +126,19 @@ local plugins = {
     end,
   },
 
+    -- Session management plugin
+  -- TODO: configure, setup
+    {
+      "tpope/vim-obsession",
+      cmd = "Obsession"
+    },
+
+    {
+      "j-hui/fidget.nvim",
+      lazy = false,
+      tag = "legacy", -- TODO: remove after rewrite
+      config = [[require('config.fidget-nvim')]],
+    },
 
   -- {
   --   'wfxr/minimap.vim',
