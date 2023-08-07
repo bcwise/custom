@@ -22,9 +22,10 @@ local sources = {
   b.code_actions.impl,
   b.completion.luasnip,
   b.completion.vsnip,
-  b.diagnostics.clang_check,
-  b.diagnostics.cppcheck,
-  b.diagnostics.cpplint,
+  -- b.diagnostics.clang_check, -- The clangd is already checking in lspconfig.lua,
+  --                               adding these causes redundant messages.
+  -- b.diagnostics.cppcheck,
+  -- b.diagnostics.cpplint,
 
   -- Git
   b.diagnostics.gitlint,
