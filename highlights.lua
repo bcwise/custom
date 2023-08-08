@@ -15,7 +15,8 @@ M.override = {
   LineNr       = { bg = "black",
                    fg = "#2b506e"},
   CursorLineNr = { gui = bold, bg = "Black", fg = "yellow"},
-  CursorLine   = { fg = "white", bg = "lightgray"},
+  CursorLine   = { bg = "#606060"},
+  CursorColumn = { bg = "#606060"},
 
   SignColumn   = { gui = bold, bg = "#2b506e", fg = "LightGray"},
 }
