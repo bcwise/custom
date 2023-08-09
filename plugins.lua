@@ -81,9 +81,12 @@ local plugins = {
       cmd("let g:central_multiple_backup_enable = 50")
     end,
   },
-  -- DeleteTrailingWhitespace.
+
+
+  ---------------------------------------------------------
+  -- Plugin: DeleteTrailingWhitespace.
   -- Adds the function to delete trailing whitespace:while
-  -- DeleteTrailingWhitespace.
+  ---------------------------------------------------------
   {
      "vim-scripts/deletetrailingwhitespace",
     lazy = false,
@@ -96,6 +99,19 @@ local plugins = {
 
   {
     "sainnhe/edge",
+  },
+
+
+  ---------------------------------------------------------
+  -- Plugin: marks.nvim
+  -- Adds marks functionality, including putting the mark in the sign column.
+  ---------------------------------------------------------
+  {
+     "chentoast/marks.nvim",
+    lazy = false,
+    config = function()
+      require("marks").setup()
+    end,
   },
 
   {
@@ -271,6 +287,19 @@ local plugins = {
     --     end)
     --   end
     -- end,
+  },
+
+
+  ---------------------------------------------------------
+  -- Plugin: smart-splits
+  -- Allows the adjustment of winodw splits.
+  ---------------------------------------------------------
+  {
+    "mrjones2014/smart-splits.nvim",
+    lazy = false,
+    config = function()
+      require("smart-splits").setup()
+    end,
   },
 
 

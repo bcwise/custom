@@ -55,6 +55,16 @@ M.general = {
 
 
     ------------------------------------------------------------------
+    -- Plugin (Mode: N): smart-splits
+    ------------------------------------------------------------------
+-- Resize with arrows
+    ["<C-Up>"]    = { "<Cmd>SmartResizeUp<CR>",    "Resize split up"    },
+    ["<C-Down>"]  = { "<Cmd>SmartResizeDown<CR>",  "Resize split down"  },
+    ["<C-Left>"]  = { "<Cmd>SmartResizeLeft<CR>",  "Resize split left"  },
+    ["<C-Right>"] = { "<Cmd>SmartResizeRight<CR>", "Resize split right" },
+
+
+    ------------------------------------------------------------------
     -- Plugin (Mode: N): Symbols-Outline
     ------------------------------------------------------------------
     ["<leader>o"]  = { "<Cmd>SymbolsOutline<CR>", "Toggles Symbol Outline."},
