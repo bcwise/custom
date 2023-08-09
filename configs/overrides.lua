@@ -1,6 +1,7 @@
 local M = {}
 
 M.treesitter = {
+  style = "bordered", -- borderless / bordered; also in chadrc
   ensure_installed = {
     "arduino",
     "bash",

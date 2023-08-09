@@ -14,7 +14,7 @@ M.ui = {
   hl_override = highlights.override,
   hl_add = highlights.add,
 
-  telescope = { style = "bordered" }, -- borderless / bordered
+  telescope = { style = "bordered" }, -- borderless / bordered; also in overrides
 
 }
 
