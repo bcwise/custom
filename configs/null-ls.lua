@@ -63,6 +63,8 @@ local sources = {
 
   -- Spelling
   b.formatting.codespell,
+  b.diagnostics.codespell,
+  -- b.diagnostics.cspell,
 
   -- SQL
   b.formatting.sqlfmt,
