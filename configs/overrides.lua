@@ -2,6 +2,10 @@ local M = {}
 
 M.treesitter = {
   style = "bordered", -- borderless / bordered; also in chadrc
+  preview = 
+  {
+      treesitter = true,
+  },
   ensure_installed = {
     "arduino",
     "bash",
@@ -125,6 +129,10 @@ M.mason = {
 
 -- git support in nvimtree
 M.nvimtree = {
+  view = {
+    width = 35,
+  },
+
   git = {
     enable = true,
   },
