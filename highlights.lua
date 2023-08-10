@@ -15,10 +15,20 @@ M.override = {
   LineNr       = { bg = "black",
                    fg = "#2b506e"},
   CursorLineNr = { gui = bold, bg = "Black", fg = "yellow"},
-  CursorLine   = { gui = bold, bg = "#C0C0C0"},
-  CursorColumn = { gui = bold, bg = "#C0C0C0"},
+  CursorLine   = { gui = bold, bg = "#888888"},
+  CursorColumn = { gui = bold, bg = "#888888"},
 
-  SignColumn   = { gui = bold, bg = "#2b506e", fg = "LightGray"},
+  -- SignColumn   = { gui = bold, bg = "#2b506e", fg = "LightGray"},
+  -- SignColumn   = { gui = bold, bg = "#2b506e", fg = "LightGray"},
+  -- SignColumn   = { gui = bold, bg = "#34495E", fg = "LightGray"},
+  -- SignColumn   = { gui = bold, bg = "#193563", fg = "LightGray"},
+  -- SignColumn   = { gui = bold, bg = "#142a4f", fg = "LightGray"},
+  -- SignColumn   = { gui = bold, bg = "#0c192d", fg = "LightGray"},
+  -- SignColumn   = { gui = bold, bg = "#092147", fg = "LightGray"},
+  -- SignColumn   = { gui = bold, bg = "#05152e", fg = "LightGray"},
+  -- SignColumn   = { gui = bold, bg = "#071d40", fg = "LightGray"},
+  -- SignColumn   = { gui = bold, bg = "#051d45", fg = "LightGray"},
+  SignColumn   = { gui = bold, bg = "#202c40", fg = "LightGray"},
 }
 
 ---@type HLTable
