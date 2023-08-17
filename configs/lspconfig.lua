@@ -21,6 +21,7 @@ end
 
 local clangd_cmd_args = {
   "clangd",
+  -- "/home/nemesis3/bwise/opt/llvm-16.0.3/root/bin/clangd",
   "-j=6",
   "--header-insertion=iwyu",
   "--completion-style=detailed",
