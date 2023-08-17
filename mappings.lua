@@ -122,7 +122,12 @@ M.general = {
     -- ["#"] = { "yq?i\V<Esc>p<CR>", "Make # work with a visual selection." },
 
     -- Repeat last action for each line in the visual selection
-    ["."] = {":normal .<CR>", "Repeat last action for each line in the visual selection."}
+    ["."] = {":normal .<CR>", "Repeat last action for each line in the visual selection."},
+
+    -- Word-wrap documents
+    -- Use internal formatting for bindings like gq. 
+    -- ["gq"] = {vim.api.nvim_create_autocmd('LspAttach', { callback = function(args) vim.bo[args.buf].formatexpr = nil, end }), "Repeat last action for each line in the visual selection."},
+
   },
 
   x = {
