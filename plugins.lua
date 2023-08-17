@@ -47,6 +47,11 @@ local plugins = {
 --   },
 
   {
+    "lewis6991/gitsigns.nvim",
+    opts = overrides.gitsigns
+  },
+
+  {
     "williamboman/mason.nvim",
     opts = overrides.mason
   },
@@ -59,6 +64,7 @@ local plugins = {
   {
     "nvim-tree/nvim-tree.lua",
     opts = overrides.nvimtree,
+    
   },
 
   -- Install a plugin
