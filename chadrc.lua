@@ -57,48 +57,20 @@ M.ui = {
   ------------------------------------------------------------------------------
   -- THEME
   ------------------------------------------------------------------------------
-  theme = "tokyonight",
-  theme_toggle = { "tokyonight", "one_light" },
+  theme = "oxocarbon",
+  theme_toggle = { "oxocarbon", "one_light" },
 
   changed_themes = {
-    tokyonight = {
-      -- base_16 = {
-      --   base00 = "#mycol",
-      -- },
-      -- base_30 = {
-      --   red = "#mycol",
-      --   white = "#mycol",
-      -- },
+    oxocarbon = {
       polish_hl = {
-        TelescopeSelection = { bg = "#ff9e64", fg = "#222222" },
         TelescopePromptPrefix = { fg = "#ffffff" },
-        CursorColumn  = { fg=NONE,      bg="#505050", gui=NONE },
-        CursorLine    = { fg=NONE,      bg="#505050", gui=NONE },
-        CursorLineNr  = { fg="#ffff00", bg="#1b3050", gui=bold },
-        LineNr        = { fg="#666666", bg="#2b4060", gui=NONE },
-        SignColumn    = { fg=NONE,      bg="#2b50b0", gui=NONE },
+        TelescopeSelection    = { fg = "#222222", bg = "#ff9e64",  },
+        CursorColumn          = { fg = NONE,      bg="#505050", gui=NONE },
+        CursorLine            = { fg = NONE,      bg="#505050", gui=NONE },
+        CursorLineNr          = { fg = "#ffff00", bg="#1b3050", gui=bold },
+        LineNr                = { fg = "#666666", bg="#2b4060", gui=NONE },
+        SignColumn            = { fg = NONE,      bg="#2b50b0", gui=NONE },
       },
-
-    },
-
-    tokyonight = {
-      -- base_16 = {
-      --   base00 = "#mycol",
-      -- },
-      -- base_30 = {
-      --   red = "#mycol",
-      --   white = "#mycol",
-      -- },
-      polish_hl = {
-        TelescopeSelection = { bg = "#ff9e64", fg = "#222222" },
-        TelescopePromptPrefix = { fg = "#ffffff" },
-        CursorColumn  = { fg=NONE,      bg="#505050", gui=NONE },
-        CursorLine    = { fg=NONE,      bg="#505050", gui=NONE },
-        CursorLineNr  = { fg="#ffff00", bg="#1b3050", gui=bold },
-        LineNr        = { fg="#666666", bg="#2b4060", gui=NONE },
-        SignColumn    = { fg=NONE,      bg="#2b50b0", gui=NONE },
-      },
-
     },
   },
 }
