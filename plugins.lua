@@ -11,6 +11,11 @@ vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
 vim.o.spell = true
 
+-- Custom listchars for indent-blankline
+vim.opt.list = true
+vim.opt.listchars:append "eol:↴"
+
+
 ---@type NvPluginSpec[]
 local plugins = {
 
@@ -158,7 +163,15 @@ local plugins = {
   -- TODO: configure, setup
     {
       "tpope/vim-obsession",
+      lazy = false,
       cmd = "Obsession"
+    },
+
+    -- Speeddating: use <C-A> to increment a number
+   --                   <C-X> to decrement a number
+    {
+      "tpope/vim-speeddating",
+      lazy = false,
     },
 
     {
@@ -205,9 +218,11 @@ local plugins = {
     lazy = false,
     config = function()
       require("indent_blankline").setup {
-        use_treesitter = true,
-        space_char_blankline = " ",
         show_current_context_start = true,
+        show_current_context       = true,
+        show_end_of_line           = true,
+        use_treesitter             = true,
+        space_char_blankline       = " ",
         char_highlight_list = {
           "IndentBlanklineIndent1",
           "IndentBlanklineIndent2",
@@ -216,7 +231,6 @@ local plugins = {
           "IndentBlanklineIndent5",
           "IndentBlanklineIndent6",
         },
-        show_current_context = false,
         filetype_exclude = { "help", "dashboard", "dashpreview", "NvimTree", "vista", "sagahover" },
         buftype_exclude = { "terminal", "nofile" },
         context_patterns = {

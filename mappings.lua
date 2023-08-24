@@ -65,6 +65,16 @@ M.general = {
 
 
     ------------------------------------------------------------------
+    -- Plugin (Mode: N): vim-speeddating
+    -- Key Mappings: They are done by default, but we'll do them here so they end up in the cheatsheet.
+    --    <C-A>: Increment the number under the cursor (<ctrl>-A, yes, capital 'X')
+    --    <C-X>: Decrement the number under the cursor (<ctrl>-X, yes, capital 'X')
+    ------------------------------------------------------------------
+    ["<C-A>"]    = { "<Cmd>SpeedDatingUp<CR>",    "Increment the value under the cursor (speeddating)"    },
+    ["<C-X>"]    = { "<Cmd>SpeedDatingDown<CR>",  "Decrement the value under the cursor (speeddating)"    },
+
+
+    ------------------------------------------------------------------
     -- Plugin (Mode: N): Symbols-Outline
     ------------------------------------------------------------------
     ["<leader>o"]  = { "<Cmd>SymbolsOutline<CR>", "Toggles Symbol Outline."},
@@ -142,6 +152,17 @@ M.general = {
     -- Plugin (Mode: X): EasyAlign
     ------------------------------------------------------------------
     ["ea"] = { "<Plug>(EasyAlign)", "Calls up the EasyAlign program to align your code."},
+
+
+    ------------------------------------------------------------------
+    -- Plugin (Mode: N): vim-speeddating
+    -- Key Mappings: They are done by default, but we'll do them here so they end up in the cheatsheet.
+    --    <C-A>: Increment the number under the cursor (<ctrl>-A, yes, capital 'X')
+    --    <C-X>: Decrement the number under the cursor (<ctrl>-X, yes, capital 'X')
+    ------------------------------------------------------------------
+    ["<C-A>"]    = { "<Cmd>SpeedDatingUp<CR>",    "Increment the value under the cursor (speeddating)"    },
+    ["<C-X>"]    = { "<Cmd>SpeedDatingDown<CR>",  "Decrement the value under the cursor (speeddating)"    },
+
 
   }
 
