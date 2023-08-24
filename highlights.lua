@@ -17,6 +17,11 @@ M.override = {
   CursorLine   = {                   bg = "#888888"},
   CursorColumn = {                   bg = "#888888"},
   SignColumn   = { fg = "LightGray", bg = "#202c40",   gui=bold },
+
+  -- GitSigns Highlight Groups
+  GitSignsCurrentLineBlame = {   bg = "lightblue", },
+
+
 }
 
 ---@type HLTable
