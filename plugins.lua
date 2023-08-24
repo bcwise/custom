@@ -167,6 +167,12 @@ local plugins = {
       cmd = "Obsession"
     },
 
+    -- Repeat vim motions
+    {
+      "tpope/vim-repeat",
+      lazy = false,
+    },
+
     -- Speeddating: use <C-A> to increment a number
    --                   <C-X> to decrement a number
     {
