@@ -137,18 +137,6 @@ local plugins = {
     dependencies = { "nvim-tree/nvim-web-devicons", lazy = false },
   },
 
-  {
-    "ludovicchabant/vim-gutentags",
-    lazy = false,
-    -- config = function()
-    --     require("user.plugins.config.others").gutentags()
-    -- end,
-    ft = {
-        "tex",
-        "bib",
-    },
-  },
-
 
   {
     -- TODO: configure setup
