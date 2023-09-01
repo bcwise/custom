@@ -72,6 +72,30 @@ local plugins = {
     
   },
 
+  -- {
+  --   "nvim-telescope/telescope.nvim",
+  --   opts = overrides.telescope,
+  -- },
+  -- {
+
+  -- if you load some function or module within your opt, wrap it with a function
+  -- {
+  --  "nvim-telescope/telescope.nvim",
+  --  opts = {
+  --    defaults = {
+  --     extension_list = {live_grep_args},
+  --      mappings = {
+  --        i = {
+  --          ["<esc>"] = function(...)
+  --              require("telescope.actions").close(...)
+  --           end,
+  --         },
+  --       },
+  --     },
+  --   },
+  --  },
+
+
   -- Install a plugin
 
   -- NVCHAD's example of adding a better escape handler.
