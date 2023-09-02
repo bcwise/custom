@@ -1,5 +1,9 @@
 ---@type mappingsTable
 
+-- Notes
+--    Speeddating does it's own mappings; therefore, it's not necessary to do them here.
+
+
 -- require'telescope.builtin'.planets{}
 
 local M = {}
@@ -45,6 +49,16 @@ M.general = {
   -- Move current line up and down
   -- ["<A-k>"]  = {'<cmd>call utils#SwitchLine(line("."), "up")<cr>', "Move line up" },
   -- ["<A-j>"]  = {'<cmd>call utils#SwitchLine(line("."), "down")<cr>', "Move line down" },
+
+    -- Plugin: EasyAlign (it wouldn't work if we made a separate category)
+    ["ea"] = { "<Plug>(EasyAlign)", "Align your code."},
+
+    -- Plugin: SmartSplits (wouldn't work in it's own category)
+    ["<C-Up>"]    = { "<Cmd>SmartResizeUp<CR>",    "Resize split up"    },
+    ["<C-Down>"]  = { "<Cmd>SmartResizeDown<CR>",  "Resize split down"  },
+    ["<C-Left>"]  = { "<Cmd>SmartResizeLeft<CR>",  "Resize split left"  },
+    ["<C-Right>"] = { "<Cmd>SmartResizeRight<CR>", "Resize split right" },
+
   },
 
   v = {
@@ -74,22 +88,12 @@ M.general = {
     -- Move current visual-line selection up and down
     ["<A-k>"] = {'<cmd>call utils#MoveSelection("up")<cr>', "Move selection up" },
     ["<A-j>"] = {'<cmd>call utils#MoveSelection("down")<cr>', "Move selection down" },
+
+
+    -- Plugin: EasyAlign (it wouldn't work if we made a separate category)
+    ["ea"] = { "<Plug>(EasyAlign)", "Align your code."},
   }
 -- more keybinds!
-}
-
-
---------------------------------------------------------------------------------
--- Plugin: EasyAlign
---------------------------------------------------------------------------------
-M.EasyAlign = {
-  plugin = true,
-  n = {
-    ["ea"] = { "<Plug>(EasyAlign)", "Align your code."},
-  },
-  x = {
-    ["ea"] = { "<Plug>(EasyAlign)", "Align your code."},
-  },
 }
 
 
@@ -133,31 +137,6 @@ M.lspconfig = {
 }
 
 
-------------------------------------------------------------------
--- Plugin: SmartSplits
-------------------------------------------------------------------
-M.SmartSplits = {
-  plugin = true,
-  n = {
-    ["<C-Up>"]    = { "<Cmd>SmartResizeUp<CR>",    "Resize split up"    },
-    ["<C-Down>"]  = { "<Cmd>SmartResizeDown<CR>",  "Resize split down"  },
-    ["<C-Left>"]  = { "<Cmd>SmartResizeLeft<CR>",  "Resize split left"  },
-    ["<C-Right>"] = { "<Cmd>SmartResizeRight<CR>", "Resize split right" },
-  },
-}
-
-
---------------------------------------------------------------------------------
--- Plugin: SPEEDDATING
---------------------------------------------------------------------------------
-M.Speeddating = {
-  plugin = true,
- 
-  n = {
-    ["<C-A>"]    = { "<Cmd>SpeedDatingUp<CR>",    "Increment the value under the cursor (speeddating)"    },
-    ["<C-X>"]    = { "<Cmd>SpeedDatingDown<CR>",  "Decrement the value under the cursor (speeddating)"    },
-  },
-}
 
 
 --------------------------------------------------------------------------------

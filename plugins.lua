@@ -344,10 +344,6 @@ local plugins = {
     lazy = false,
     config = function()
       require("smart-splits").setup()
-      require('smart-splits').resize_up(1)
-      require('smart-splits').resize_down(1)
-      require('smart-splits').resize_left(1)
-      require('smart-splits').resize_right(1)
     end,
   },
 
