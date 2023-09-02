@@ -1,5 +1,7 @@
 ---@type mappingsTable
 
+-- require'telescope.builtin'.planets{}
+
 local M = {}
 M.general = {
   n = {
@@ -96,31 +98,33 @@ M.EasyAlign = {
 --------------------------------------------------------------------------------
 M.lspconfig = {
   plugin = true,
- 
+
   n = {
     -- LSP (buffer commands)--
-    -- ["<leader>fm"] = { function() vim.lsp.buf.format { async = true } end, "LSP formatting", },
- 
+    -- ["ci"] = { function() require'telescope.builtin'.lsp_incoming_calls() end, "LSP incoming calls to the given function", },
+    ["ci"] = { function() vim.lsp.buf.incoming_calls() end, "LSP incoming calls to the given function", },
+    ["co"] = { function() vim.lsp.buf.outgoing_calls() end, "LSP outgoing calls from the given function", },
+
     -- Code Actions:
     -- ["<ca"]         = { function() vim.lsp.buf.code_action() end,  "LSP code action",},
- 
+
     -- Definitions
     -- ["gd"]         = { function() vim.lsp.buf.definition() end,  "LSP Definition",},
     -- ["gD"]         = { function() vim.lsp.buf.declaration() end, "LSP Declaration",},
     -- ["gi"]         = { function() vim.lsp.buf.implementation() end, "LSP implementation",},
     -- ["gr"]         = { function() vim.lsp.buf.references() end, "LSP references", },
     ["gt"]            = { function() vim.lsp.buf.type_definition() end, "LSP definition type",},
- 
+
     -- LSP: diagnostics
     ["df"]            = { function() vim.diagnostic.open_float { border = "rounded" } end, "Floating diagnostic", },
     ["dl"]            = { function() vim.diagnostic.setloclist() end, "Diagnostic setloclist", },
     -- ["[d"]         = { function() vim.diagnostic.goto_prev { float = { border = "rounded" } } end, "Goto prev", },
     -- ["]d"]         = { function() vim.diagnostic.goto_next { float = { border = "rounded" } } end, "Goto next", },
- 
+
     -- Signature
     ["K"]             = { function() vim.lsp.buf.hover() end,       "LSP Declaration",},
     ["sh"]            = { function() vim.lsp.buf.signature_help() end, "LSP signature help",},
- 
+
     -- Workspace
     ["wa"]            = { function() vim.lsp.buf.add_workspace_folder() end, "Add workspace folder", },
     ["wr"]            = { function() vim.lsp.buf.remove_workspace_folder() end, "Remove workspace folder", },
