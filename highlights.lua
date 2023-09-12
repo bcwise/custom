@@ -4,23 +4,26 @@
 
 local M = {}
 
-
 ---@type Base46HLGroupsList
 M.override = {
   Comment = {
     italic = true,
+    fg = "#8080cc",
+    bg = "#444444",
   },
 
   -- The number column
   LineNr       = { fg = "#777777",   bg = "#2b506e" },
-  CursorLineNr = { fg = "yellow",    bg = "#2b506e",   gui=bold },
-  CursorLine   = {                   bg = "#888888"},
-  CursorColumn = {                   bg = "#888888"},
-  SignColumn   = { fg = "LightGray", bg = "#202c40",   gui=bold },
+  CursorLineNr = { fg = "yellow",    bg = "#2b506e" },
+  CursorLine   = {                   bg = "#888888" },
+  CursorColumn = {                   bg = "#888888" },
+  SignColumn   = { fg = "LightGray", bg = "#202c40" },
 
   -- GitSigns Highlight Groups
-  GitSignsCurrentLineBlame = {   bg = "lightblue", },
+  GitSignsCurrentLineBlame = {   fg = "lightblue", },
 
+  -- Telescope
+  TelescopeSelection = { fg = "#22222f", bg = "orange"},
 
 }
 
