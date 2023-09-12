@@ -21,6 +21,12 @@ local plugins = {
 
   -- Override plugin definition options
 
+  --------------------------------------------------------------------
+  -- OVERRIDE
+  -- PLUGIN:  nvim-lspconfig
+  -- GitHub:  neovim/nvim-lspconfig
+  -- Comment: 
+  --------------------------------------------------------------------
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -38,35 +44,46 @@ local plugins = {
     end, -- Override to setup mason-lspconfig
   },
 
---   If you load vim-ctrlspace, it causes a side effect
-  --   that when you load multiple files from the command
-  --   line (e.g. nvim *.cpp), only the first file has syntax highlighting,
-  --   the remainder of the files, the filetype is unknown (unless you run it manually again).
-  --   The workaround is to use  Telescope (<leader>fb : show buffers (the same thing as ctrlspace))
---   {
---     "vim-ctrlspace/vim-ctrlspace",
---     lazy = false,
---     config = function()
---       require("custom.configs.ctrlspace")
---     end,
---   },
-
+  --------------------------------------------------------------------
+  -- OVERRIDE
+  -- PLUGIN:  gitsigns.nvim
+  -- GitHub:  lewis6991/gitsigns.nvim
+  -- Comment: 
+  --------------------------------------------------------------------
   {
     "lewis6991/gitsigns.nvim",
     opts = overrides.gitsigns
   },
 
+  --------------------------------------------------------------------
+  -- OVERRIDE
+  -- PLUGIN:  mason.nvim
+  -- GitHub:  williamboman/mason.nvim
+  -- Comment: Package manager for LSPs.
+  --------------------------------------------------------------------
   {
     "williamboman/mason.nvim",
     opts = overrides.mason
   },
 
+  --------------------------------------------------------------------
+  -- OVERRIDE
+  -- PLUGIN:  nvim-treesitter
+  -- GitHub:  nvim-treesitter/nvim-treesitter
+  -- Comment: Syntax parser
+  --------------------------------------------------------------------
   {
     "nvim-treesitter/nvim-treesitter",
     opts = overrides.treesitter,
   },
 
   {
+  --------------------------------------------------------------------
+  -- OVERRIDE
+  -- PLUGIN:  nvim-tree.lua
+  -- GitHub:  nvim-tree/nvim-tree.lua
+  -- Comment: File system viewer
+  --------------------------------------------------------------------
     "nvim-tree/nvim-tree.lua",
     opts = overrides.nvimtree,
     
@@ -96,9 +113,42 @@ local plugins = {
   --  },
 
 
-  -- Install a plugin
+    -- Install a plugin
 
-  -- NVCHAD's example of adding a better escape handler.
+  --------------------------------------------------------------------
+  -- PLUGIN:  ChatGPT
+  -- GitHub:  jackMort/ChatGPT.nvim
+  -- Comment: ChatGPT interface
+  --------------------------------------------------------------------
+  {
+    "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("chatgpt").setup({
+        api_key_cmd = "echo $HOME/secret.txt.gpg",
+      })
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
+    },
+  },
+
+  --------------------------------------------------------------------
+  -- PLUGIN:  nvim-dap
+  -- GitHub:  https://github.com/mfussenegger/nvim-dap.git
+  -- Comment: Debug Adapter Protocol (DAP) client implementation
+  --------------------------------------------------------------------
+  {
+    "mfussenegger/nvim-dap",
+  }
+
+  --------------------------------------------------------------------
+  -- PLUGIN:  better-escape.nvim
+  -- GitHub: max397574/better-escape.nvim
+  -- Comment: A better escape handler.
+  --------------------------------------------------------------------
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
@@ -107,7 +157,11 @@ local plugins = {
     end,
   },
 
-  -- Central.vim: manages your backup, swap, and undo directories and files.
+  --------------------------------------------------------------------
+  -- PLUGIN:  central.vim
+  -- GitHub:  her/central.vim
+  -- Comment: Manages your backup, swap, and undo directories and files.
+  --------------------------------------------------------------------
   {
     "her/central.vim",
     lazy = false,
@@ -117,30 +171,41 @@ local plugins = {
     end,
   },
 
-
-  ---------------------------------------------------------
-  -- Plugin: DeleteTrailingWhitespace.
-  -- Adds the function to delete trailing whitespace:while
-  ---------------------------------------------------------
+  --------------------------------------------------------------------
+  -- PLUGIN:  DeleteTrailingWhitespace.
+  -- GitHub:  vim-scripts/deletetrailingwhitespace
+  -- Comment: Adds the function to delete trailing whitespace.
+  --------------------------------------------------------------------
   {
      "vim-scripts/deletetrailingwhitespace",
     lazy = false,
   },
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  vim-easy-align
+  -- GitHub:  junegunn/vim-easy-align
+  -- Comment: Easily align text
+  --------------------------------------------------------------------
   {
     "junegunn/vim-easy-align",
     lazy = false,
   },
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  edge
+  -- GitHub:  sainnhe/edge
+  -- Comment: Theme.
+  --------------------------------------------------------------------
   {
     "sainnhe/edge",
   },
 
 
-  ---------------------------------------------------------
-  -- Plugin: marks.nvim
-  -- Adds marks functionality, including putting the mark in the sign column.
-  ---------------------------------------------------------
+  --------------------------------------------------------------------
+  -- PLUGIN:  marks.nvim
+  -- GitHub:  chentoast/marks.nvim
+  -- Comment: Adds marks functionality, including putting the mark in the sign column.
+  --------------------------------------------------------------------
   {
      "chentoast/marks.nvim",
     lazy = false,
@@ -149,12 +214,23 @@ local plugins = {
     end,
   },
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  todo-comments.nvim
+  -- GitHub:  folke/todo-comments.nvim
+  -- Comment: Highlights certain words to grab your attention.date
+  --          Words such as TODO, FIXME, etc.
+  --------------------------------------------------------------------
   {
     "folke/todo-comments.nvim",
     lazy = false,
     dependencies = { "nvim-lua/plenary.nvim" },
   },
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  trouble.nvim
+  -- GitHub:  folke/trouble.nvim
+  -- Comment: Displays diagnostic information.
+  --------------------------------------------------------------------
   {
     "folke/trouble.nvim",
     lazy = false,
@@ -162,6 +238,11 @@ local plugins = {
   },
 
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  nvim-hlslens
+  -- GitHub:  kevinhwang91/nvim-hlslens
+  -- Comment: Matches...
+  --------------------------------------------------------------------
   {
     -- TODO: configure setup
     "kevinhwang91/nvim-hlslens",
@@ -171,7 +252,11 @@ local plugins = {
     end,
   },
 
-    -- Session management plugin
+  --------------------------------------------------------------------
+  -- PLUGIN:  vim-obsession
+  -- GitHub:  tpope/vim-obsession
+  -- Comment: Session management plugin
+  --------------------------------------------------------------------
   -- TODO: configure, setup
     {
       "tpope/vim-obsession",
@@ -179,19 +264,32 @@ local plugins = {
       cmd = "Obsession"
     },
 
-    -- Repeat vim motions
+  --------------------------------------------------------------------
+  -- PLUGIN:  vim-repeat
+  -- GitHub:  tpope/vim-repeat
+  -- Comment: Repeat vim motions
+  --------------------------------------------------------------------
     {
       "tpope/vim-repeat",
       lazy = false,
     },
 
-    -- Speeddating: use <C-A> to increment a number
-   --                   <C-X> to decrement a number
+  --------------------------------------------------------------------
+  -- PLUGIN:  Speeddating
+  -- GitHub:  tpope/vim-speeddating
+  -- Comment: use <C-A> to increment a number
+  --              <C-X> to decrement a number
+  --------------------------------------------------------------------
     {
       "tpope/vim-speeddating",
       lazy = false,
     },
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  fidget.nvim
+  -- GitHub:  j-hui/fidget.nvim
+  -- Comment: TODO: What does this do?
+  --------------------------------------------------------------------
     {
       "j-hui/fidget.nvim",
       lazy = false,
@@ -199,6 +297,12 @@ local plugins = {
       config = [[require('config.fidget-nvim')]],
     },
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  
+  -- GitHub:  
+  -- Comment: Makes a mini-map on the side of the nvim windows and Displays
+  --          your file so you know where you are.
+  --------------------------------------------------------------------
   -- {
   --   'wfxr/minimap.vim',
   --   lazy = false,
@@ -215,7 +319,11 @@ local plugins = {
   -- },
 
 
-  -- Rainbow indent plugin
+  --------------------------------------------------------------------
+  -- PLUGIN:  nvim-ts-rainbow
+  -- GitHub:  p00f/nvim-ts-rainbow
+  -- Comment: Rainbow indent plugin
+  --------------------------------------------------------------------
   {
     "p00f/nvim-ts-rainbow",
     lazy = false,
@@ -230,7 +338,11 @@ local plugins = {
     end,
   },
 
-  -- Rainbow brackets plugin
+  --------------------------------------------------------------------
+  -- PLUGIN:  indent-blankline.nvim
+  -- GitHub:  lukas-reineke/indent-blankline.nvim
+  -- Comment: Rainbow brackets plugin
+  --------------------------------------------------------------------
   {
     "lukas-reineke/indent-blankline.nvim",
     lazy = false,
@@ -272,6 +384,11 @@ local plugins = {
   },
 
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  mini.indentscope
+  -- GitHub:  echasnovski/mini.indentscope
+  -- Comment: 
+  --------------------------------------------------------------------
   {
     "echasnovski/mini.indentscope",
     version = false, -- wait till new 0.7.0 release to put it back on semver
@@ -302,6 +419,11 @@ local plugins = {
     end,
   },
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  nvim-notify
+  -- GitHub:  rcarriga/nvim-notify
+  -- Comment: Puts up notification windows
+  --------------------------------------------------------------------
   {
     "rcarriga/nvim-notify",
     lazy = false,
@@ -335,10 +457,11 @@ local plugins = {
   },
 
 
-  ---------------------------------------------------------
-  -- Plugin: smart-splits
-  -- Allows the adjustment of winodw splits.
-  ---------------------------------------------------------
+  --------------------------------------------------------------------
+  -- PLUGIN: smart-splits
+  -- GitHub:  mrjones2014/smart-splits.nvim
+  -- Comment: Allows the adjustment of winodw splits.
+  --------------------------------------------------------------------
   {
     "mrjones2014/smart-splits.nvim",
     lazy = false,
@@ -348,6 +471,12 @@ local plugins = {
   },
 
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  symbols-outline.nvim
+  -- GitHub:  simrat39/symbols-outline.nvim
+  -- Comment: Adds a window to the right side and display an outline
+  --          of the file (symbols, variables, etc.).
+  --------------------------------------------------------------------
   {
     "simrat39/symbols-outline.nvim",
     lazy = false,
@@ -357,6 +486,11 @@ local plugins = {
   },
 
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  vimtex
+  -- GitHub:  lervag/vimtex
+  -- Comment: Helper for TeX files.
+  --------------------------------------------------------------------
   {
     "lervag/vimtex",
     lazy = false,
