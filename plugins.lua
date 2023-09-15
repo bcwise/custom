@@ -10,11 +10,15 @@ cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+
+-- Spelling Options
 opt.spell = true
+opt.spelllang = { 'en_us' }
 
 -- Custom listchars for indent-blankline
 opt.list = true
 opt.listchars:append "eol:↴"
+
 
 
 ---@type NvPluginSpec[]
@@ -115,6 +119,7 @@ local plugins = {
           sources = cmp.config.sources(
             {
               { name = "buffer", priority = 20 },         -- Complete text from buffers other than the current one
+              { name = "calc" },
               { name = "luasnip" },
               { name = "nvim_lua" },
               { name = "cmdline" },
@@ -122,6 +127,12 @@ local plugins = {
               { name = "nvim_lsp_signature_help" },       -- Signature help
               { name = "latex_symbols"},                  --
               { name = "path", priority = 10 },           -- Complete from file paths
+              { name = "spell", option = { keep_all_entries = false,
+                                           enable_in_context = function()
+                                             return require('cmp.config.context').in_treesitter_capture('spell')
+                                           end,
+                                         }
+              },
             }
           ),
           snippet = {
@@ -138,12 +149,14 @@ local plugins = {
       {
         -- LSP completion sources
         "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-calc",
         "hrsh7th/cmp-cmdline",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-nvim-lsp-signature-help",
         "kdheepak/cmp-latex-symbols",
         "neovim/nvim-lspconfig",
         "python-lsp/python-lsp-server",
+        "f3fora/cmp-spell",
       },
     }
   },
@@ -151,6 +164,7 @@ local plugins = {
   --##############################################################################
   --OVERRIDES
   --##############################################################################
+  { "gbprod/cutlass.nvim",             opts = overrides.cutlass     },
   { "lewis6991/gitsigns.nvim",         opts = overrides.gitsigns    },
   { "williamboman/mason.nvim",         opts = overrides.mason       },
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter, },

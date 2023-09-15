@@ -1,6 +1,16 @@
 local M = {}
 
   --------------------------------------------------------------------
+  -- PLUGIN:  cutlass
+  -- GitHub:  http://github.com/gdprod/cutlass.nvim
+  -- Comment: Controls the sign column(s)
+  --------------------------------------------------------------------
+M.cutlass = {
+  cut_key = 'x',
+  override_del = true,
+}
+
+  --------------------------------------------------------------------
   -- PLUGIN:  gitsigns
   -- GitHub:  
   -- Comment: Controls the sign column(s)
