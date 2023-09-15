@@ -233,6 +233,23 @@ local plugins = {
   },
 
   --------------------------------------------------------------------
+  -- PLUGIN:  nvim-conv
+  -- GitHub:  http://github.com/simonefranza/nvim-conv
+  -- Comment: A simple converter that allows you to convert:
+  --            numbers from a base to another
+  --               * sequences of bytes to a string and vice-versa
+  --               * values from one unit to another one (temperature, metric and imperial units, data transfer rate)
+  --               * colors between hex, rgb, hslnumbers from a base to another
+  --               * sequences of bytes to a string and vice-versa
+  --               * values from one unit to another one (temperature, metric and imperial units, data transfer rate)
+  --               * colors between hex, rgb, hsl
+  --------------------------------------------------------------------
+  {
+     "simonefranza/nvim-conv",
+    lazy = false,
+  },
+
+  --------------------------------------------------------------------
   -- PLUGIN:  nvim-dap
   -- GitHub:  https://github.com/mfussenegger/nvim-dap.git
   -- Comment: Debug Adapter Protocol (DAP) client implementation
@@ -649,11 +666,13 @@ local plugins = {
 
   -- EXTRAS
   { import = "custom.configs.extras.autosave" },
-  { import = "custom.configs.extras.cutlass" },
+  -- { import = "custom.configs.extras.cutlass" },
+  { import = "custom.configs.extras.diffview" },
   { import = "custom.configs.extras.illuminate" },
   { import = "custom.configs.extras.lazygit" },
   { import = "custom.configs.extras.lsplines" },
   { import = "custom.configs.extras.symbols-outline" },
+  { import = "custom.configs.extras.trouble" },
 }
 
 
