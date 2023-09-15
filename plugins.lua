@@ -164,7 +164,7 @@ local plugins = {
   --##############################################################################
   --OVERRIDES
   --##############################################################################
-  { "gbprod/cutlass.nvim",             opts = overrides.cutlass     },
+  -- { "gbprod/cutlass.nvim",             opts = overrides.cutlass     },
   { "lewis6991/gitsigns.nvim",         opts = overrides.gitsigns    },
   { "williamboman/mason.nvim",         opts = overrides.mason       },
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter, },
