@@ -24,7 +24,8 @@ M.general = {
 --[";"]    = ":%s/\\<<c-r><c-w>\\>//g<left><left>"
 --["<CR>"] = ":let @/=expand('<cword>')<CR>:set hls<CR>"
 --["S"]    = ':let @x=@"<CR>"_diw"xP'
-    ["<CR>"] = { ":let @/=expand('<cword>')<CR>:set hls<CR>", "<Enter> selects for searching the current word under the cursor."},
+    ["<CR>"] = { ":let @/=expand('<cword>')<CR>:set hls<CR>",
+               "<Enter> selects for searching the current word under the cursor."},
 
 -- " Shortcuts: search/replace
 -- " A function is for replacing the current-under-cursor word with
@@ -78,7 +79,9 @@ M.general = {
 
     -- Word-wrap documents
     -- Use internal formatting for bindings like gq.
-    -- ["gq"] = {vim.api.nvim_create_autocmd('LspAttach', { callback = function(args) vim.bo[args.buf].formatexpr = nil, end }), "Repeat last action for each line in the visual selection."},
+    -- ["gq"] = {vim.api.nvim_create_autocmd('LspAttach',
+    --          { callback = function(args) vim.bo[args.buf].formatexpr = nil, end }),
+    --          "Repeat last action for each line in the visual selection."},
   },
 
   x = {
@@ -105,7 +108,8 @@ M.lspconfig = {
 
   n = {
     -- LSP (buffer commands)--
-    -- ["ci"] = { function() require'telescope.builtin'.lsp_incoming_calls() end, "LSP incoming calls to the given function", },
+    -- ["ci"] = { function() require'telescope.builtin'.lsp_incoming_calls() end,
+    -- "LSP incoming calls to the given function", },
     ["ci"] = { function() vim.lsp.buf.incoming_calls() end, "LSP incoming calls to the given function", },
     ["co"] = { function() vim.lsp.buf.outgoing_calls() end, "LSP outgoing calls from the given function", },
 
@@ -174,18 +178,20 @@ M.telescope = {
     ["<leader>fw"]   = { "<Cmd> Telescope grep_string <CR>", "Search for the string under the cursor" },
 
     -- Find git --
-    ["<leader>gc"]   = { "<cmd> Telescope git_commits <CR>", "Git commits" },
-    ["<leader>gs"]   = { "<cmd> Telescope git_status <CR>", "Git status" },
-    ["<leader>gb"]   = { "<cmd> Telescope git_branches <CR>", "Git branches" },
-    ["<leader>gst"]  = { "<cmd> Telescope git_stash <CR>", "Git list stashed items" },
+    ["<leader>gc"]  = { "<cmd> Telescope git_commits <CR>",  "Git commits"  },
+    ["<leader>gs"]  = { "<cmd> Telescope git_status <CR>",   "Git status"   },
+    ["<leader>gb"]  = { "<cmd> Telescope git_branches <CR>", "Git branches" },
+    ["<leader>gst"] = { "<cmd> Telescope git_stash <CR>",    "Git list      stashed items" },
 
-    ["<leader>lr"]   = { "<Cmd> Telescope lsp_references <CR>",                "LSP References", "Show LSP references" },
-    ["<leader>lds"]  = { "<Cmd> Telescope lsp_document_symbols <CR>",          "Show LSP symbols for the current document" },
+    ["<leader>lr"]   = { "<Cmd> Telescope lsp_references <CR>",
+                                                             "LSP References", "Show LSP references" },
+    ["<leader>lds"]  = { "<Cmd> Telescope lsp_document_symbols <CR>",
+                                                             "Show LSP symbols for the current document" },
     ["<leader>lws"]  = { "<Cmd> Telescope lsp_workspace_symbols <CR>",         "LSP: Show workspace symbols" },
     ["<leader>ldws"] = { "<Cmd> Telescope lsp_dynamic_workspace_symbols <CR>", "Show LSP dynamic workspace symbols" },
     ["<leader>ld"]   = { "<Cmd> Telescope diagnostics <CR>",                   "Show diagnostics" },
     ["<leader>li"]   = { "<Cmd> Telescope lsp_implementations <CR>",           "Show LSP implementations" },
-    ["<leader>ld"]   = { "<Cmd> Telescope lsp_definitions <CR>",               "Show LSP definitions" },
+    ["<leader>lD"]   = { "<Cmd> Telescope lsp_definitions <CR>",               "Show LSP definitions" },
     ["<leader>lt"]   = { "<Cmd> Telescope lsp_type_definitions <CR>",          "Show LSP type definitions" },
 
     -- Miscellaneous --
