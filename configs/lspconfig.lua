@@ -13,6 +13,12 @@ local lspconfig = require "lspconfig"
 require('lspconfig.ui.windows').default_options.border = 'double'
 
 
+-- Disable virtual_text since it's redundant due to lsp_lines.
+vim.diagnostic.config({
+  virtual_text = false,
+})
+
+
 -- if you just want default config for the servers then put them in a table
 local servers = {
                   "arduino_language_server",

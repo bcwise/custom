@@ -1,19 +1,20 @@
 local cmd = vim.cmd
 local g   = vim.g
+local opt = vim.opt
 local overrides = require("custom.configs.overrides")
 
-vim.opt.termguicolors = true
-vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-vim.o.spell = true
+opt.termguicolors = true
+cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+opt.spell = true
 
 -- Custom listchars for indent-blankline
-vim.opt.list = true
-vim.opt.listchars:append "eol:↴"
+opt.list = true
+opt.listchars:append "eol:↴"
 
 
 ---@type NvPluginSpec[]
@@ -25,7 +26,7 @@ local plugins = {
   -- OVERRIDE
   -- PLUGIN:  nvim-lspconfig
   -- GitHub:  neovim/nvim-lspconfig
-  -- Comment: 
+  -- Comment:
   --------------------------------------------------------------------
   {
     "neovim/nvim-lspconfig",
@@ -44,50 +45,116 @@ local plugins = {
     end, -- Override to setup mason-lspconfig
   },
 
-  --------------------------------------------------------------------
-  -- OVERRIDE
-  -- PLUGIN:  gitsigns.nvim
-  -- GitHub:  lewis6991/gitsigns.nvim
-  -- Comment: 
-  --------------------------------------------------------------------
-  {
-    "lewis6991/gitsigns.nvim",
-    opts = overrides.gitsigns
-  },
-
-  --------------------------------------------------------------------
-  -- OVERRIDE
-  -- PLUGIN:  mason.nvim
-  -- GitHub:  williamboman/mason.nvim
-  -- Comment: Package manager for LSPs.
-  --------------------------------------------------------------------
-  {
-    "williamboman/mason.nvim",
-    opts = overrides.mason
-  },
-
-  --------------------------------------------------------------------
-  -- OVERRIDE
-  -- PLUGIN:  nvim-treesitter
-  -- GitHub:  nvim-treesitter/nvim-treesitter
-  -- Comment: Syntax parser
-  --------------------------------------------------------------------
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = overrides.treesitter,
-  },
 
   {
-  --------------------------------------------------------------------
-  -- OVERRIDE
-  -- PLUGIN:  nvim-tree.lua
-  -- GitHub:  nvim-tree/nvim-tree.lua
-  -- Comment: File system viewer
-  --------------------------------------------------------------------
-    "nvim-tree/nvim-tree.lua",
-    opts = overrides.nvimtree,
-    
+    -- TODO: I can't seem to override the standard configuration and get additional
+    --       completion code libraries.   So I have to take the NvChad configuration
+    --       and put it here with my changes.
+    "hrsh7th/nvim-cmp",
+    config = function()
+      local cmp = require("cmp")
+
+      cmp.setup(
+        {
+          lazy = false,
+          mapping = {
+            ["<C-p>"] = cmp.mapping.select_prev_item(),
+            ["<C-n>"] = cmp.mapping.select_next_item(),
+            ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+            ["<C-f>"] = cmp.mapping.scroll_docs(4),
+            ["<C-Space>"] = function(fallback)
+              -- Reference: https://github.com/hrsh7th/nvim-cmp/issues/429#issuecomment-954121524
+              cmp.abort()
+            end,
+            ["<Space>"] = function(fallback)
+              -- Reference: https://github.com/hrsh7th/nvim-cmp/issues/429#issuecomment-954121524
+              cmp.abort()
+              fallback()
+            end,
+            ["<CR>"] = cmp.mapping.confirm {
+              behavior = cmp.ConfirmBehavior.Insert,  -- Don't delete the word to the right
+              select = false,
+            },
+            ["<Tab>"] = cmp.mapping(function(fallback)
+              if cmp.visible() then
+                cmp.select_next_item()
+                -- expand_or_locally_jumpable prevents the snippet from being re-entered.
+                --
+                -- Reference: https://github.com/L3MON4D3/LuaSnip/issues/799
+                --
+                -- elseif require("luasnip").expand_or_jumpable() then
+                --
+                -- There's apparently other approaches that do the same thing which I haven't tried.
+                --
+                -- e.g. ``region_check_events`` from https://github.com/L3MON4D3/LuaSnip/issues/770
+                -- e.g. ``leave_snippet`` from https://github.com/L3MON4D3/LuaSnip/issues/258#issuecomment-1011938524
+                --
+              elseif require("luasnip").expand_or_locally_jumpable() then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+              else
+                fallback()
+              end
+            end, {
+                "i",
+                "s",
+              }),
+            ["<S-Tab>"] = cmp.mapping(function(fallback)
+              if cmp.visible() then
+                cmp.select_prev_item()
+              elseif require("luasnip").jumpable(-1) then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+              else
+                fallback()
+              end
+            end, {
+                "i",
+                "s",
+              }),
+          },
+
+          sources = cmp.config.sources(
+            {
+              { name = "buffer", priority = 20 },         -- Complete text from buffers other than the current one
+              { name = "luasnip" },
+              { name = "nvim_lua" },
+              { name = "cmdline" },
+              { name = "nvim_lsp", priority = 90 },       -- And auto-complete from LSPs
+              { name = "nvim_lsp_signature_help" },       -- Signature help
+              { name = "latex_symbols"},                  --
+              { name = "path", priority = 10 },           -- Complete from file paths
+            }
+          ),
+          snippet = {
+            expand = function(args)
+              require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+            end,
+          },
+        }
+      )
+      local lspconfig    = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    end,
+    dependencies = {
+      {
+        -- LSP completion sources
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-nvim-lsp-signature-help",
+        "kdheepak/cmp-latex-symbols",
+        "neovim/nvim-lspconfig",
+        "python-lsp/python-lsp-server",
+      },
+    }
   },
+
+  --##############################################################################
+  --OVERRIDES
+  --##############################################################################
+  { "lewis6991/gitsigns.nvim",         opts = overrides.gitsigns    },
+  { "williamboman/mason.nvim",         opts = overrides.mason       },
+  { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter, },
+  { "nvim-tree/nvim-tree.lua",         opts = overrides.nvimtree,   },
 
   -- {
   --   "nvim-telescope/telescope.nvim",
@@ -113,7 +180,23 @@ local plugins = {
   --  },
 
 
-    -- Install a plugin
+  --############################################################################
+  -- INSTALL
+  --############################################################################
+
+  --------------------------------------------------------------------
+  -- PLUGIN:  central.vim
+  -- GitHub:  her/central.vim
+  -- Comment: Manages your backup, swap, and undo directories and files.
+  --------------------------------------------------------------------
+  {
+    "her/central.vim",
+    lazy = false,
+    config = function()
+      cmd("let g:central_cleanup_enable = 30")
+      cmd("let g:central_multiple_backup_enable = 50")
+    end,
+  },
 
   --------------------------------------------------------------------
   -- PLUGIN:  ChatGPT
@@ -142,7 +225,7 @@ local plugins = {
   --------------------------------------------------------------------
   {
     "mfussenegger/nvim-dap",
-  }
+  },
 
   --------------------------------------------------------------------
   -- PLUGIN:  better-escape.nvim
@@ -154,20 +237,6 @@ local plugins = {
     event = "InsertEnter",
     config = function()
       require("better_escape").setup()
-    end,
-  },
-
-  --------------------------------------------------------------------
-  -- PLUGIN:  central.vim
-  -- GitHub:  her/central.vim
-  -- Comment: Manages your backup, swap, and undo directories and files.
-  --------------------------------------------------------------------
-  {
-    "her/central.vim",
-    lazy = false,
-    config = function()
-      cmd("let g:central_cleanup_enable = 30")
-      cmd("let g:central_multiple_backup_enable = 50")
     end,
   },
 
@@ -200,43 +269,18 @@ local plugins = {
     "sainnhe/edge",
   },
 
-
   --------------------------------------------------------------------
-  -- PLUGIN:  marks.nvim
-  -- GitHub:  chentoast/marks.nvim
-  -- Comment: Adds marks functionality, including putting the mark in the sign column.
+  -- PLUGIN:  fidget.nvim
+  -- GitHub:  j-hui/fidget.nvim
+  -- Comment: UI for nvim-lsp progress.  Shows LSP progress in the
+  --          lower right hand corner of Neovim's screen.
   --------------------------------------------------------------------
-  {
-     "chentoast/marks.nvim",
-    lazy = false,
-    config = function()
-      require("marks").setup()
-    end,
-  },
-
-  --------------------------------------------------------------------
-  -- PLUGIN:  todo-comments.nvim
-  -- GitHub:  folke/todo-comments.nvim
-  -- Comment: Highlights certain words to grab your attention.date
-  --          Words such as TODO, FIXME, etc.
-  --------------------------------------------------------------------
-  {
-    "folke/todo-comments.nvim",
-    lazy = false,
-    dependencies = { "nvim-lua/plenary.nvim" },
-  },
-
-  --------------------------------------------------------------------
-  -- PLUGIN:  trouble.nvim
-  -- GitHub:  folke/trouble.nvim
-  -- Comment: Displays diagnostic information.
-  --------------------------------------------------------------------
-  {
-    "folke/trouble.nvim",
-    lazy = false,
-    dependencies = { "nvim-tree/nvim-web-devicons", lazy = false },
-  },
-
+    {
+      "j-hui/fidget.nvim",
+      lazy = false,
+      tag = "legacy", -- TODO: remove after rewrite
+      config = [[require('config.fidget-nvim')]],
+    },
 
   --------------------------------------------------------------------
   -- PLUGIN:  nvim-hlslens
@@ -249,6 +293,19 @@ local plugins = {
     lazy = false,
     config = function()
       require("hlslens").setup()
+    end,
+  },
+
+  --------------------------------------------------------------------
+  -- PLUGIN:  marks.nvim
+  -- GitHub:  chentoast/marks.nvim
+  -- Comment: Adds marks functionality, including putting the mark in the sign column.
+  --------------------------------------------------------------------
+  {
+     "chentoast/marks.nvim",
+    lazy = false,
+    config = function()
+      require("marks").setup()
     end,
   },
 
@@ -286,20 +343,22 @@ local plugins = {
     },
 
   --------------------------------------------------------------------
-  -- PLUGIN:  fidget.nvim
-  -- GitHub:  j-hui/fidget.nvim
-  -- Comment: TODO: What does this do?
+  -- PLUGIN:  todo-comments.nvim
+  -- GitHub:  folke/todo-comments.nvim
+  -- Comment: Highlights certain words to grab your attention.date
+  --          Words such as TODO, FIXME, etc.
+  --          FIXME:
   --------------------------------------------------------------------
-    {
-      "j-hui/fidget.nvim",
-      lazy = false,
-      tag = "legacy", -- TODO: remove after rewrite
-      config = [[require('config.fidget-nvim')]],
-    },
+  {
+    "folke/todo-comments.nvim",
+    lazy = false,
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+
 
   --------------------------------------------------------------------
-  -- PLUGIN:  
-  -- GitHub:  
+  -- PLUGIN:
+  -- GitHub:
   -- Comment: Makes a mini-map on the side of the nvim windows and Displays
   --          your file so you know where you are.
   --------------------------------------------------------------------
@@ -387,7 +446,7 @@ local plugins = {
   --------------------------------------------------------------------
   -- PLUGIN:  mini.indentscope
   -- GitHub:  echasnovski/mini.indentscope
-  -- Comment: 
+  -- Comment:
   --------------------------------------------------------------------
   {
     "echasnovski/mini.indentscope",
@@ -460,28 +519,13 @@ local plugins = {
   --------------------------------------------------------------------
   -- PLUGIN: smart-splits
   -- GitHub:  mrjones2014/smart-splits.nvim
-  -- Comment: Allows the adjustment of winodw splits.
+  -- Comment: Allows the adjustment of window splits.
   --------------------------------------------------------------------
   {
     "mrjones2014/smart-splits.nvim",
     lazy = false,
     config = function()
       require("smart-splits").setup()
-    end,
-  },
-
-
-  --------------------------------------------------------------------
-  -- PLUGIN:  symbols-outline.nvim
-  -- GitHub:  simrat39/symbols-outline.nvim
-  -- Comment: Adds a window to the right side and display an outline
-  --          of the file (symbols, variables, etc.).
-  --------------------------------------------------------------------
-  {
-    "simrat39/symbols-outline.nvim",
-    lazy = false,
-    config = function()
-      require("symbols-outline").setup()
     end,
   },
 
@@ -523,6 +567,15 @@ local plugins = {
   --   "mg979/vim-visual-multi",
   --   lazy = false,
   -- }
+
+  -- EXTRAS
+  { import = "custom.configs.extras.autosave" },
+  { import = "custom.configs.extras.cutlass" },
+  { import = "custom.configs.extras.illuminate" },
+  { import = "custom.configs.extras.lazygit" },
+  { import = "custom.configs.extras.lsplines" },
+  { import = "custom.configs.extras.symbols-outline" },
 }
+
 
 return plugins
