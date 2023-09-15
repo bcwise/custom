@@ -1,5 +1,10 @@
 local M = {}
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  gitsigns
+  -- GitHub:  
+  -- Comment: Controls the sign column(s)
+  --------------------------------------------------------------------
 M.gitsigns = {
   signs = {
     add          = { text = '+' },
@@ -43,6 +48,10 @@ M.gitsigns = {
 }
 
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  treesitter
+  -- Comment: Treesitter configuration
+  --------------------------------------------------------------------
 M.treesitter = {
   style = "bordered", -- borderless / bordered; also in chadrc
   preview = 
@@ -90,6 +99,10 @@ M.treesitter = {
 }
 
 
+  --------------------------------------------------------------------
+  -- PLUGIN:  Mason
+  -- Comment: LSP plugin manager
+  --------------------------------------------------------------------
 M.mason = {
   ensure_installed = {
     -- Arduino
@@ -173,7 +186,10 @@ M.mason = {
   },
 }
 
--- git support in nvimtree
+--------------------------------------------------------------------
+-- PLUGIN:  nvim-tree
+-- Comment: File explorer
+--------------------------------------------------------------------
 M.nvimtree = {
   view = {
     width = 35,
