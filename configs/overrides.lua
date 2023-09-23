@@ -241,4 +241,17 @@ M.nvimtree = {
 --
 -- }
 
+
+  --------------------------------------------------------------------
+  -- PLUGIN:  which-key
+  -- GitHub:  folke/which-key.nvim
+  -- Comment: Displays a popup with possible key bindings of the
+  --          of the command that you started typing.
+  --------------------------------------------------------------------
+M.which_key = {
+  n = { "e", "w" },
+  v = { "e", "w" },
+}
+
+
 return M

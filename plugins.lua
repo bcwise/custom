@@ -10,22 +10,22 @@ cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-
+ 
 -- Spelling Options
 opt.spell = true
 opt.spelllang = { 'en_us' }
-
+ 
 -- Custom listchars for indent-blankline
 opt.list = true
 opt.listchars:append "eol:↴"
-
-
-
+ 
+ 
+ 
 ---@type NvPluginSpec[]
 local plugins = {
-
+ 
   -- Override plugin definition options
-
+ 
   --------------------------------------------------------------------
   -- OVERRIDE
   -- PLUGIN:  nvim-lspconfig
@@ -48,8 +48,8 @@ local plugins = {
       require "custom.configs.lspconfig"
     end, -- Override to setup mason-lspconfig
   },
-
-
+ 
+ 
   {
     -- TODO: I can't seem to override the standard configuration and get additional
     --       completion code libraries.   So I have to take the NvChad configuration
@@ -57,11 +57,47 @@ local plugins = {
     "hrsh7th/nvim-cmp",
     config = function()
       local cmp = require("cmp")
-
-      cmp.setup(
-        {
-          lazy = false,
-          mapping = {
+      local lspkind = require("lspkind")
+ 
+      -- `:` cmdline setup.
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' }
+        }, {
+          {
+            name = 'cmdline',
+            option = {
+              ignore_cmds = { 'Man', '!' }
+            }
+          }
+        })
+      })
+      cmp.setup({
+            lazy       = false,
+            completion = cmp.mapping.preset.cmdline { completeopt = 'menu,menuone,noinsert' },
+            formatting = {
+              format = lspkind.cmp_format({
+                  with_text = false,
+                  maxwidth  = 50,
+                  mode      = "symbol_text",
+                  menu      = ({
+                      buffer        = "[Buffer]",
+                      calc          = "[Calc]",
+                      latex_symbols = "[Latex]",
+                      LuaSnip       = "[LuaSnip]",
+                      nvim_lsp      = "[LSP]",
+                      nvim_lua      = "[Lua]",
+                      path          = "[PATH]",
+                      omni          = "[Omni]",
+                      snippy        = "[Snippy]",
+                      treesitter    = "[Tree]",
+                      ultisnips     = "[US]",
+                      vsnip         = "[VSnip]",
+                  }),
+              }),
+            },
+            mapping = {
             ["<C-p>"] = cmp.mapping.select_prev_item(),
             ["<C-n>"] = cmp.mapping.select_next_item(),
             ["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -115,33 +151,55 @@ local plugins = {
                 "s",
               }),
           },
-
-          sources = cmp.config.sources(
-            {
-              { name = "buffer", priority = 20 },         -- Complete text from buffers other than the current one
-              { name = "calc" },
-              { name = "luasnip" },
-              { name = "nvim_lua" },
-              { name = "cmdline" },
-              { name = "nvim_lsp", priority = 90 },       -- And auto-complete from LSPs
-              { name = "nvim_lsp_signature_help" },       -- Signature help
-              { name = "latex_symbols"},                  --
-              { name = "path", priority = 10 },           -- Complete from file paths
-              { name = "spell", option = { keep_all_entries = false,
-                                           enable_in_context = function()
-                                             return require('cmp.config.context').in_treesitter_capture('spell')
-                                           end,
-                                         }
-              },
-            }
-          ),
+ 
+          sources = cmp.config.sources({
+            { name = "buffer",                 keyword_length = 2, priority = 20 },
+            { name = "calc" },
+            { name = "cmdline" },
+            { name = "latex_symbols"},
+            { name = "luasnip" },
+            { name = "nvim_lsp",                                   priority = 90 },
+            { name = "nvim_lsp_signature_help" },
+            { name = "nvim_lua" },
+            { name = "omni",                                       priority = 80 },
+            { name = "path",                                       priority = 10 },
+            { name = "spell", option = { keep_all_entries = false,
+                                          enable_in_context = function()
+                                            return require('cmp.config.context').in_treesitter_capture('spell')
+                                          end,
+                                        }
+            },
+          }),
           snippet = {
             expand = function(args)
               require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
             end,
           },
-        }
-      )
+          window = {
+            completion    = cmp.config.window.bordered(),
+            documentation = cmp.config.window.bordered(),
+          },
+ 
+        }) -- cmp.setp()
+ 
+        -- -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+        -- cmp.setp.cmdline({ '/', '?' }, {
+        --   mapping = cmp.mapping.preset.cmdline(),
+        --   sources = {
+        --     { name = 'buffer' }
+        --   }
+        -- })
+        --
+        -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+        -- cmp.setup.cmdline(':', {
+        --   mapping = cmp.mapping.preset.cmdline(),
+        --   sources = cmp.config.sources({
+        --     { name = 'path' }
+        --   }, {
+        --     { name = 'cmdline' }
+        --   })
+        -- })
+ 
       local lspconfig    = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
     end,
@@ -155,12 +213,13 @@ local plugins = {
         "hrsh7th/cmp-nvim-lsp-signature-help",
         "kdheepak/cmp-latex-symbols",
         "neovim/nvim-lspconfig",
+        "hrsh7th/cmp-omni",
         "python-lsp/python-lsp-server",
         "f3fora/cmp-spell",
       },
     }
   },
-
+ 
   --##############################################################################
   --OVERRIDES
   --##############################################################################
@@ -169,13 +228,14 @@ local plugins = {
   { "williamboman/mason.nvim",         opts = overrides.mason       },
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter, },
   { "nvim-tree/nvim-tree.lua",         opts = overrides.nvimtree,   },
-
+  { "folke/which-key.nvim",            opts = overrides.which_key,  },
+ 
   -- {
   --   "nvim-telescope/telescope.nvim",
   --   opts = overrides.telescope,
   -- },
   -- {
-
+ 
   -- if you load some function or module within your opt, wrap it with a function
   -- {
   --  "nvim-telescope/telescope.nvim",
@@ -192,12 +252,12 @@ local plugins = {
   --     },
   --   },
   --  },
-
-
+ 
+ 
   --############################################################################
   -- INSTALL
   --############################################################################
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  central.vim
   -- GitHub:  her/central.vim
@@ -211,7 +271,8 @@ local plugins = {
       cmd("let g:central_multiple_backup_enable = 50")
     end,
   },
-
+ 
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  ChatGPT
   -- GitHub:  jackMort/ChatGPT.nvim
@@ -231,8 +292,8 @@ local plugins = {
       "nvim-telescope/telescope.nvim"
     },
   },
-
-  --------------------------------------------------------------------
+ 
+--------------------------------------------------------------------
   -- PLUGIN:  nvim-conv
   -- GitHub:  http://github.com/simonefranza/nvim-conv
   -- Comment: A simple converter that allows you to convert:
@@ -248,7 +309,7 @@ local plugins = {
      "simonefranza/nvim-conv",
     lazy = false,
   },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  nvim-dap
   -- GitHub:  https://github.com/mfussenegger/nvim-dap.git
@@ -257,7 +318,7 @@ local plugins = {
   {
     "mfussenegger/nvim-dap",
   },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  better-escape.nvim
   -- GitHub: max397574/better-escape.nvim
@@ -270,7 +331,7 @@ local plugins = {
       require("better_escape").setup()
     end,
   },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  DeleteTrailingWhitespace.
   -- GitHub:  vim-scripts/deletetrailingwhitespace
@@ -280,8 +341,8 @@ local plugins = {
      "vim-scripts/deletetrailingwhitespace",
     lazy = false,
   },
-
-  --------------------------------------------------------------------
+ 
+--------------------------------------------------------------------
   -- PLUGIN:  vim-easy-align
   -- GitHub:  junegunn/vim-easy-align
   -- Comment: Easily align text
@@ -290,7 +351,7 @@ local plugins = {
     "junegunn/vim-easy-align",
     lazy = false,
   },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  edge
   -- GitHub:  sainnhe/edge
@@ -299,7 +360,7 @@ local plugins = {
   {
     "sainnhe/edge",
   },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  fidget.nvim
   -- GitHub:  j-hui/fidget.nvim
@@ -312,7 +373,7 @@ local plugins = {
       tag = "legacy", -- TODO: remove after rewrite
       config = [[require('config.fidget-nvim')]],
     },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  nvim-hlslens
   -- GitHub:  kevinhwang91/nvim-hlslens
@@ -326,7 +387,18 @@ local plugins = {
       require("hlslens").setup()
     end,
   },
-
+ 
+  --------------------------------------------------------------------
+  -- PLUGIN:  lspkind.nvim
+  -- GitHub:  onsails/lspkind.nvim
+  -- Comment: Adds symbols to nvim-cmp
+  --------------------------------------------------------------------
+  {
+    "onsails/lspkind.nvim",
+    lazy = false,
+  },
+ 
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  marks.nvim
   -- GitHub:  chentoast/marks.nvim
@@ -339,7 +411,7 @@ local plugins = {
       require("marks").setup()
     end,
   },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  vim-obsession
   -- GitHub:  tpope/vim-obsession
@@ -351,7 +423,7 @@ local plugins = {
       lazy = false,
       cmd = "Obsession"
     },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  vim-repeat
   -- GitHub:  tpope/vim-repeat
@@ -361,7 +433,7 @@ local plugins = {
       "tpope/vim-repeat",
       lazy = false,
     },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  Speeddating
   -- GitHub:  tpope/vim-speeddating
@@ -372,7 +444,7 @@ local plugins = {
       "tpope/vim-speeddating",
       lazy = false,
     },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  todo-comments.nvim
   -- GitHub:  folke/todo-comments.nvim
@@ -391,17 +463,17 @@ local plugins = {
   -- keywords recognized as todo comments
   keywords = {
     FIX = {
-      icon = " ", -- icon used for the sign, and in search results
+      icon = "<U+F188> ", -- icon used for the sign, and in search results
       color = "error", -- can be a hex color, or a named color (see below)
       alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
       -- signs = false, -- configure signs for some keywords individually
     },
-    TODO = { icon = " ", color = "info" },
-    HACK = { icon = " ", color = "warning" },
-    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-    TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+    TODO = { icon = "<U+F00C> ", color = "info" },
+    HACK = { icon = "<U+F490> ", color = "warning" },
+    WARN = { icon = "<U+F071> ", color = "warning", alt = { "WARNING", "XXX" } },
+    PERF = { icon = "<U+F651> ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+    NOTE = { icon = "<U+F867> ", color = "hint", alt = { "INFO" } },
+    TEST = { icon = "<U+23F2> ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
   },
   gui_style = {
     fg = "NONE", -- The gui style to use for the fg highlight group.
@@ -450,8 +522,8 @@ local plugins = {
   },
     }
   },
-
-
+ 
+ 
   --------------------------------------------------------------------
   -- PLUGIN:
   -- GitHub:
@@ -472,28 +544,41 @@ local plugins = {
   --     g.minimap_enable_highlight_colorgroup = 1
   --   end,
   -- },
-
-
+ 
+ 
   --------------------------------------------------------------------
-  -- PLUGIN:  nvim-ts-rainbow
-  -- GitHub:  p00f/nvim-ts-rainbow
-  -- Comment: Rainbow indent plugin
+  -- PLUGIN:  rainbow-delimiters
+  -- GitHub:  HiPhish/rainbow-delimiters
+  -- Comment: Highlights the delimiters of a programming language: {}[]""'' etc.
   --------------------------------------------------------------------
   {
-    "p00f/nvim-ts-rainbow",
+    "HiPhish/rainbow-delimiters.nvim",
     lazy = false,
     config = function()
-      require("nvim-treesitter.configs").setup {
-        rainbow = {
-          enable = true,
-          extended_mode = true,
-          max_file_lines = nil,
+      local rainbow_delimiters = require 'rainbow-delimiters'
+      require 'rainbow-delimiters.setup' {
+        strategy = {
+            [''] = rainbow_delimiters.strategy['global'],
+            commonlisp = rainbow_delimiters.strategy['local'],
+        },
+        query = {
+          [''] = 'rainbow-delimiters',
+          lua = 'rainbow-blocks',
+        },
+        highlight = {
+          'RainbowDelimiterRed',
+          'RainbowDelimiterYellow',
+          'RainbowDelimiterBlue',
+          'RainbowDelimiterOrange',
+          'RainbowDelimiterGreen',
+          'RainbowDelimiterViolet',
+          'RainbowDelimiterCyan',
         },
       }
     end,
   },
-
-  --------------------------------------------------------------------
+ 
+--------------------------------------------------------------------
   -- PLUGIN:  indent-blankline.nvim
   -- GitHub:  lukas-reineke/indent-blankline.nvim
   -- Comment: Rainbow brackets plugin
@@ -503,21 +588,8 @@ local plugins = {
     lazy = false,
     config = function()
       require("indent_blankline").setup {
-        show_current_context_start = true,
-        show_current_context       = true,
-        show_end_of_line           = true,
-        use_treesitter             = true,
-        space_char_blankline       = " ",
-        char_highlight_list = {
-          "IndentBlanklineIndent1",
-          "IndentBlanklineIndent2",
-          "IndentBlanklineIndent3",
-          "IndentBlanklineIndent4",
-          "IndentBlanklineIndent5",
-          "IndentBlanklineIndent6",
-        },
-        filetype_exclude = { "help", "dashboard", "dashpreview", "NvimTree", "vista", "sagahover" },
-        buftype_exclude = { "terminal", "nofile" },
+        -- Context
+        char = "",
         context_patterns = {
           "class",
           "function",
@@ -534,46 +606,33 @@ local plugins = {
           "fn",
           "func",
         },
+        show_current_context                = true,
+        show_current_context_start          = true,
+ 
+        -- indent
+        max_indent_increase                 = 4,
+ 
+        -- <space> char
+        space_char_highlight_list           = { 'IndentBLHi1', 'IndentBLHi2' },
+        space_char_blankline_highlight_list = { 'IndentBLHi1', 'IndentBLHi2' },
+        space_char_blankline                = " ",
+ 
+        show_end_of_line                    = true,
+        use_treesitter                      = true,
+        char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+          "IndentBlanklineIndent3",
+          "IndentBlanklineIndent4",
+          "IndentBlanklineIndent5",
+          "IndentBlanklineIndent6",
+        },
+        filetype_exclude = { "help", "dashboard", "dashpreview", "NvimTree", "vista", "sagahover" },
+        buftype_exclude = { "terminal", "nofile" },
       }
     end,
   },
-
-
-  --------------------------------------------------------------------
-  -- PLUGIN:  mini.indentscope
-  -- GitHub:  echasnovski/mini.indentscope
-  -- Comment:
-  --------------------------------------------------------------------
-  {
-    "echasnovski/mini.indentscope",
-    version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      -- symbol = "▏",
-      symbol = "│",
-      options = { try_as_border = true },
-    },
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = {
-          "help",
-          "alpha",
-          "dashboard",
-          "neo-tree",
-          "Trouble",
-          "lazy",
-          "mason",
-          "notify",
-          "toggleterm",
-          "lazyterm",
-        },
-        callback = function()
-          vim.b.miniindentscope_disable = false
-        end,
-      })
-    end,
-  },
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  nvim-notify
   -- GitHub:  rcarriga/nvim-notify
@@ -610,8 +669,8 @@ local plugins = {
     --   end
     -- end,
   },
-
-
+ 
+ 
   --------------------------------------------------------------------
   -- PLUGIN: smart-splits
   -- GitHub:  mrjones2014/smart-splits.nvim
@@ -624,8 +683,7 @@ local plugins = {
       require("smart-splits").setup()
     end,
   },
-
-
+ 
   --------------------------------------------------------------------
   -- PLUGIN:  vimtex
   -- GitHub:  lervag/vimtex
@@ -642,20 +700,20 @@ local plugins = {
       "bib",
     },
   },
-
-
+ 
+ 
   -- Removed this to reload the configuration files
   -- {
   --   "jose-elias-alvarez/null-ls.nvim",
   --   enabled = false
   -- },
-
+ 
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
   --   enabled = false
   -- },
-
+ 
   -- All NvChad plugins are lazy-loaded by default
   -- For a plugin to be loaded, you will need to set either `ft`, `cmd`, `keys`, `event`, or set `lazy = false`
   -- If you want a plugin to load on startup, add `lazy = false` to a plugin spec, for example
@@ -663,17 +721,17 @@ local plugins = {
   --   "mg979/vim-visual-multi",
   --   lazy = false,
   -- }
-
+ 
   -- EXTRAS
   { import = "custom.configs.extras.autosave" },
   -- { import = "custom.configs.extras.cutlass" },
   { import = "custom.configs.extras.diffview" },
   { import = "custom.configs.extras.illuminate" },
   { import = "custom.configs.extras.lazygit" },
-  { import = "custom.configs.extras.lsplines" },
+  -- { import = "custom.configs.extras.lsplines" },
   { import = "custom.configs.extras.symbols-outline" },
   { import = "custom.configs.extras.trouble" },
 }
-
-
+ 
+ 
 return plugins
