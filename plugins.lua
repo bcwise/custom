@@ -60,19 +60,19 @@ local plugins = {
       local lspkind = require("lspkind")
  
       -- `:` cmdline setup.
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' }
-        }, {
-          {
-            name = 'cmdline',
-            option = {
-              ignore_cmds = { 'Man', '!' }
-            }
-          }
-        })
-      })
+      -- cmp.setup.cmdline(':', {
+      --   mapping = cmp.mapping.preset.cmdline(),
+      --   sources = cmp.config.sources({
+      --     { name = 'path' }
+      --   }, {
+      --     {
+      --       name = 'cmdline',
+      --       option = {
+      --         ignore_cmds = { 'Man', '!' }
+      --       }
+      --     }
+      --   })
+      -- })
       cmp.setup({
             lazy       = false,
             completion = cmp.mapping.preset.cmdline { completeopt = 'menu,menuone,noinsert' },
@@ -151,7 +151,7 @@ local plugins = {
                 "s",
               }),
           },
- 
+
           sources = cmp.config.sources({
             { name = "buffer",                 keyword_length = 2, priority = 20 },
             { name = "calc" },
@@ -463,17 +463,17 @@ local plugins = {
   -- keywords recognized as todo comments
   keywords = {
     FIX = {
-      icon = "<U+F188> ", -- icon used for the sign, and in search results
+      icon = " ", -- icon used for the sign, and in search results
       color = "error", -- can be a hex color, or a named color (see below)
       alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
       -- signs = false, -- configure signs for some keywords individually
     },
-    TODO = { icon = "<U+F00C> ", color = "info" },
-    HACK = { icon = "<U+F490> ", color = "warning" },
-    WARN = { icon = "<U+F071> ", color = "warning", alt = { "WARNING", "XXX" } },
-    PERF = { icon = "<U+F651> ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-    NOTE = { icon = "<U+F867> ", color = "hint", alt = { "INFO" } },
-    TEST = { icon = "<U+23F2> ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+    TODO = { icon = " ", color = "info" },
+    HACK = { icon = " ", color = "warning" },
+    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+    TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
   },
   gui_style = {
     fg = "NONE", -- The gui style to use for the fg highlight group.
